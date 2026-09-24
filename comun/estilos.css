@@ -1,0 +1,170 @@
+:root {
+  --marca: #0f766e;
+  --marca-suave: color-mix(in srgb, var(--marca) 12%, white);
+  --fondo: #f6f7f9;
+  --tarjeta: #ffffff;
+  --texto: #1f2933;
+  --texto-suave: #5f6b7a;
+  --borde: #e2e6eb;
+  --ok: #15803d;
+  --alerta: #b45309;
+  --error: #b91c1c;
+  --radio: 12px;
+  --sombra: 0 1px 3px rgba(16, 24, 40, .08), 0 1px 2px rgba(16, 24, 40, .04);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.45;
+}
+
+button, input, select { font: inherit; }
+
+.contenedor { max-width: 960px; margin: 0 auto; padding: 16px; }
+.angosto { max-width: 560px; }
+
+/* ---------- Encabezado ---------- */
+.encabezado {
+  background: var(--marca);
+  color: white;
+  padding: 20px 16px 24px;
+}
+.encabezado .contenedor { padding-top: 0; padding-bottom: 0; }
+.encabezado h1 { margin: 0 0 4px; font-size: 1.35rem; }
+.encabezado p { margin: 0; opacity: .9; font-size: .95rem; }
+
+/* ---------- Tarjetas ---------- */
+.tarjeta {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.tarjeta h2 { margin: 0 0 12px; font-size: 1.1rem; }
+.paso { color: var(--texto-suave); font-size: .85rem; margin-bottom: 4px; }
+
+/* ---------- Opciones ---------- */
+.opciones { display: grid; gap: 8px; }
+.opciones.dias { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+.opciones.horas { grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); }
+
+.opcion {
+  border: 1px solid var(--borde);
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+  color: var(--texto);
+}
+.opcion:hover { border-color: var(--marca); }
+.opcion.elegida { border-color: var(--marca); background: var(--marca-suave); font-weight: 600; }
+.opcion small { display: block; color: var(--texto-suave); font-weight: 400; }
+.opcion:disabled { opacity: .45; cursor: not-allowed; }
+.opciones.horas .opcion, .opciones.dias .opcion { text-align: center; padding: 10px 6px; }
+
+/* ---------- Formularios ---------- */
+label { display: block; font-size: .9rem; margin: 12px 0 4px; color: var(--texto-suave); }
+input, select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  background: white;
+}
+input:focus, select:focus { outline: 2px solid var(--marca-suave); border-color: var(--marca); }
+
+/* ---------- Botones ---------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 11px 16px;
+  cursor: pointer;
+  background: var(--marca);
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+.boton:hover { filter: brightness(1.07); }
+.boton.secundario { background: white; color: var(--texto); border-color: var(--borde); }
+.boton.whatsapp { background: #25d366; color: #073b1d; }
+.boton.peligro { background: white; color: var(--error); border-color: #f1c4c4; }
+.boton.chico { padding: 6px 10px; font-size: .85rem; font-weight: 500; }
+.boton.ancho { width: 100%; margin-top: 16px; }
+.boton:disabled { opacity: .5; cursor: not-allowed; }
+
+.acciones { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Mensajes ---------- */
+.aviso { background: var(--marca-suave); border-radius: 10px; padding: 12px 14px; font-size: .92rem; }
+.vacio { color: var(--texto-suave); font-size: .92rem; }
+.oculto { display: none !important; }
+
+.exito { text-align: center; }
+.exito .icono { font-size: 2.5rem; }
+
+/* ---------- Panel ---------- */
+.barra {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 16px;
+}
+.pestanas { display: flex; gap: 4px; background: white; border: 1px solid var(--borde); border-radius: 10px; padding: 4px; }
+.pestana { border: 0; background: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; color: var(--texto-suave); }
+.pestana.activa { background: var(--marca); color: white; }
+
+.metricas { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.metrica { background: white; border: 1px solid var(--borde); border-radius: var(--radio); padding: 14px 16px; box-shadow: var(--sombra); }
+.metrica .numero { font-size: 1.7rem; font-weight: 700; }
+.metrica .etiqueta { color: var(--texto-suave); font-size: .85rem; }
+.metrica.destacada { border-color: var(--marca); background: var(--marca-suave); }
+
+.navegar-dia { display: flex; align-items: center; gap: 8px; }
+.navegar-dia strong { min-width: 190px; text-align: center; }
+
+.fila {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--borde);
+}
+.fila:last-child { border-bottom: 0; }
+.fila .hora { font-weight: 700; font-variant-numeric: tabular-nums; }
+.fila .quien small { display: block; color: var(--texto-suave); }
+.fila.cancelado .quien { text-decoration: line-through; color: var(--texto-suave); }
+
+.estado { display: inline-block; font-size: .75rem; padding: 2px 8px; border-radius: 999px; font-weight: 600; margin-left: 6px; }
+.estado.confirmado { background: #dcfce7; color: var(--ok); }
+.estado.pendiente { background: #fef3c7; color: var(--alerta); }
+.estado.cancelado { background: #fee2e2; color: var(--error); }
+.estado.recuperado { background: var(--marca-suave); color: var(--marca); }
+
+/* ---------- Modal ---------- */
+.fondo-modal {
+  position: fixed; inset: 0; background: rgba(15, 23, 42, .45);
+  display: flex; align-items: flex-end; justify-content: center; padding: 16px; z-index: 10;
+}
+.modal { background: white; border-radius: var(--radio); max-width: 520px; width: 100%; padding: 20px; max-height: 90vh; overflow: auto; }
+.modal h3 { margin-top: 0; }
+@media (min-width: 640px) { .fondo-modal { align-items: center; } }
+
+.pie { text-align: center; color: var(--texto-suave); font-size: .85rem; padding: 24px 16px 40px; }
+.pie a { color: var(--texto-suave); }
+
+@media (max-width: 560px) {
+  .fila { grid-template-columns: 52px 1fr; }
+  .fila .acciones { grid-column: 1 / -1; }
+  .navegar-dia strong { min-width: 0; }
+}

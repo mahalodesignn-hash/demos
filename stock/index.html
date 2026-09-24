@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Control de stock</title>
+  <link rel="stylesheet" href="../comun/estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <h1 id="negocio-nombre"></h1>
+      <p>Control de stock</p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <!-- Registro rápido: sirve con lector de código de barras (escribe el código + Enter) -->
+    <section class="tarjeta">
+      <h2>Registrar venta o entrada</h2>
+      <form id="form-rapido" autocomplete="off">
+        <label for="buscar-rapido">Escaneá el código o escribí el nombre del producto</label>
+        <input id="buscar-rapido" placeholder="Ej: 7790001000011 o cuaderno">
+      </form>
+      <div id="sugerencias" class="opciones" style="margin-top:8px"></div>
+      <div id="elegido" class="oculto" style="margin-top:12px">
+        <div class="aviso" id="elegido-info"></div>
+        <label for="cantidad">Cantidad</label>
+        <input id="cantidad" type="number" min="1" value="1" inputmode="numeric">
+        <div class="acciones" style="margin-top:12px">
+          <button class="boton" id="btn-venta">Vendí</button>
+          <button class="boton secundario" id="btn-entrada">Llegó mercadería</button>
+          <button class="boton secundario" id="btn-cancelar-rapido">Cancelar</button>
+        </div>
+      </div>
+      <p class="aviso oculto" id="rapido-ok" style="margin-top:12px"></p>
+    </section>
+
+    <section class="metricas" id="metricas"></section>
+
+    <div class="barra">
+      <div class="pestanas">
+        <button class="pestana activa" data-vista="reponer">Para reponer</button>
+        <button class="pestana" data-vista="productos">Productos</button>
+        <button class="pestana" data-vista="movimientos">Movimientos</button>
+      </div>
+      <button class="boton secundario chico" id="btn-reiniciar">Reiniciar demo</button>
+    </div>
+
+    <section class="tarjeta" id="vista-reponer">
+      <h2>Para reponer</h2>
+      <p class="vacio" style="margin-top:0">Productos por debajo del mínimo, agrupados por proveedor. El pedido se arma solo y se manda por WhatsApp.</p>
+      <div id="lista-reponer"></div>
+    </section>
+
+    <section class="tarjeta oculto" id="vista-productos">
+      <div class="barra" style="margin-bottom:8px">
+        <h2 style="margin:0">Productos</h2>
+        <button class="boton chico" id="btn-nuevo">+ Nuevo producto</button>
+      </div>
+      <div class="acciones" style="margin-bottom:8px">
+        <input id="filtro" placeholder="Buscar..." style="flex:1;min-width:160px">
+        <select id="filtro-categoria" style="width:auto"></select>
+      </div>
+      <div id="lista-productos"></div>
+    </section>
+
+    <section class="tarjeta oculto" id="vista-movimientos">
+      <h2>Últimos movimientos</h2>
+      <div id="lista-movimientos"></div>
+    </section>
+  </main>
+
+  <div class="fondo-modal oculto" id="modal">
+    <div class="modal" id="modal-contenido"></div>
+  </div>
+
+  <footer class="pie">Demo · los datos se guardan solo en este navegador</footer>
+
+  <script src="config.js"></script>
+  <script src="datos.js"></script>
+  <script src="stock.js"></script>
+</body>
+</html>

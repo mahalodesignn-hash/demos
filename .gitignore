@@ -1,0 +1,5 @@
+.claude/
+*.lnk
+desktop.ini
+__pycache__/
+.tmp.driveupload/

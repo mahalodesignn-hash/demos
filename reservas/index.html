@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sacar turno</title>
+  <link rel="stylesheet" href="../comun/estilos.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor angosto">
+      <h1 id="negocio-nombre"></h1>
+      <p id="negocio-detalle"></p>
+    </div>
+  </header>
+
+  <main class="contenedor angosto">
+    <!-- Paso 1: servicio -->
+    <section class="tarjeta" id="paso-servicio">
+      <div class="paso">Paso 1 de 3</div>
+      <h2>¿Qué necesitás?</h2>
+      <div class="opciones" id="lista-servicios"></div>
+    </section>
+
+    <!-- Paso 2: día y horario -->
+    <section class="tarjeta oculto" id="paso-horario">
+      <div class="paso">Paso 2 de 3</div>
+      <h2>Elegí día y horario</h2>
+      <div class="opciones dias" id="lista-dias"></div>
+      <div id="bloque-horas" class="oculto">
+        <label id="titulo-horas"></label>
+        <div class="opciones horas" id="lista-horas"></div>
+      </div>
+      <div id="sin-lugar" class="aviso oculto" style="margin-top:12px">
+        No quedan horarios libres para ese día.
+        <button class="boton chico secundario" id="btn-ir-espera" style="margin-left:6px">Anotarme en la lista de espera</button>
+      </div>
+      <p class="vacio" style="margin:14px 0 0">¿No te sirve ningún horario?
+        <a href="#" id="link-espera">Anotate en la lista de espera</a> y te avisamos por WhatsApp si se libera un lugar.</p>
+    </section>
+
+    <!-- Paso 3: datos -->
+    <section class="tarjeta oculto" id="paso-datos">
+      <div class="paso">Paso 3 de 3</div>
+      <h2>Tus datos</h2>
+      <div class="aviso" id="resumen"></div>
+      <form id="form-datos">
+        <label for="nombre">Nombre y apellido</label>
+        <input id="nombre" required autocomplete="name">
+        <label for="telefono">WhatsApp</label>
+        <input id="telefono" required inputmode="tel" placeholder="Ej: 341 555 1234" autocomplete="tel">
+        <button class="boton ancho" type="submit">Confirmar turno</button>
+      </form>
+    </section>
+
+    <!-- Lista de espera -->
+    <section class="tarjeta oculto" id="paso-espera">
+      <h2>Lista de espera</h2>
+      <p class="vacio" style="margin-top:0">Si alguien cancela, te avisamos por WhatsApp y el lugar es tuyo si lo confirmás primero.</p>
+      <form id="form-espera">
+        <label for="espera-servicio">Servicio</label>
+        <select id="espera-servicio"></select>
+        <label for="espera-preferencia">¿Qué horario te queda mejor?</label>
+        <select id="espera-preferencia">
+          <option value="cualquiera">Cualquiera</option>
+          <option value="mañana">Mañana</option>
+          <option value="tarde">Tarde</option>
+        </select>
+        <label for="espera-nombre">Nombre y apellido</label>
+        <input id="espera-nombre" required autocomplete="name">
+        <label for="espera-telefono">WhatsApp</label>
+        <input id="espera-telefono" required inputmode="tel" placeholder="Ej: 341 555 1234" autocomplete="tel">
+        <button class="boton ancho" type="submit">Anotarme</button>
+        <button class="boton ancho secundario" type="button" id="btn-volver-espera">Volver</button>
+      </form>
+    </section>
+
+    <!-- Confirmación -->
+    <section class="tarjeta exito oculto" id="paso-listo">
+      <div class="icono">✅</div>
+      <h2 id="listo-titulo"></h2>
+      <p id="listo-detalle"></p>
+      <div class="acciones" style="justify-content:center">
+        <a class="boton whatsapp" id="listo-whatsapp" target="_blank" rel="noopener">Avisar por WhatsApp</a>
+        <button class="boton secundario" id="btn-otro">Sacar otro turno</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    Demo · <a href="panel.html">Ver el panel del consultorio</a>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="datos.js"></script>
+  <script src="paciente.js"></script>
+</body>
+</html>
