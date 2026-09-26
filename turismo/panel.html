@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel de la agencia</title>
+  <link rel="stylesheet" href="../comun/estilos.css">
+  <link rel="stylesheet" href="turismo.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <h1 id="agencia-nombre"></h1>
+      <p>Panel de consultas y presupuestos</p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="metricas" id="metricas"></section>
+
+    <div class="barra">
+      <div class="pestanas">
+        <button class="pestana activa" data-vista="consultas">Consultas</button>
+        <button class="pestana" data-vista="presupuestos">Presupuestos</button>
+        <button class="pestana" data-vista="preferencias">Mis preferencias</button>
+      </div>
+      <div class="acciones">
+        <a class="boton secundario chico" href="consulta.html" target="_blank">Abrir formulario de consulta</a>
+        <button class="boton secundario chico" id="btn-reiniciar">Reiniciar demo</button>
+      </div>
+    </div>
+
+    <!-- Consultas -->
+    <section class="tarjeta" id="vista-consultas">
+      <div class="barra" style="margin-bottom:4px">
+        <h2 style="margin:0">Consultas</h2>
+        <select id="filtro-nivel" style="width:auto">
+          <option value="">Todas</option>
+          <option value="caliente">🔥 Calientes</option>
+          <option value="tibio">🟡 Tibias</option>
+          <option value="frio">❄️ Frías</option>
+        </select>
+      </div>
+      <p class="vacio" style="margin-top:0">Ordenadas por intención de compra: arriba las que más chances tienen de viajar.</p>
+      <div id="lista-consultas"></div>
+    </section>
+
+    <!-- Presupuestos -->
+    <section class="tarjeta oculto" id="vista-presupuestos">
+      <h2>Presupuestos</h2>
+      <div id="lista-presupuestos"></div>
+    </section>
+
+    <!-- Preferencias -->
+    <section class="tarjeta oculto" id="vista-preferencias">
+      <h2>Mis preferencias</h2>
+      <p class="vacio" style="margin-top:0">Lo que tenés en cuenta al cotizar. El asistente lo usa para elegir y ordenar opciones, y el margen se suma solo a cada presupuesto.</p>
+      <form id="form-prefs">
+        <label for="pref-margen">Margen sobre el costo (%)</label>
+        <input id="pref-margen" name="margen" type="number" min="0" step="0.5" style="max-width:140px">
+        <label for="pref-mayoristas">Mayoristas con los que trabajo</label>
+        <input id="pref-mayoristas" name="mayoristas">
+        <label for="pref-aerolineas">Aerolíneas y vuelos</label>
+        <input id="pref-aerolineas" name="aerolineas">
+        <label for="pref-hoteles">Hotelería</label>
+        <input id="pref-hoteles" name="hoteles">
+        <label for="pref-asistencia">Asistencia al viajero</label>
+        <input id="pref-asistencia" name="asistencia">
+        <label for="pref-autos">Alquiler de autos</label>
+        <input id="pref-autos" name="autos">
+        <label for="pref-notas">Otras reglas</label>
+        <input id="pref-notas" name="notas">
+        <button class="boton ancho" type="submit">Guardar preferencias</button>
+        <p class="aviso oculto" id="prefs-ok" style="margin-top:12px">Preferencias guardadas.</p>
+      </form>
+    </section>
+
+    <!-- Editor de presupuesto -->
+    <section class="oculto" id="vista-editor">
+      <div class="tarjeta">
+        <div class="barra" style="margin-bottom:0">
+          <h2 style="margin:0" id="editor-titulo">Presupuesto</h2>
+          <button class="boton secundario chico" id="btn-volver">← Volver</button>
+        </div>
+        <div class="grilla-2">
+          <div><label>Título</label><input id="ed-titulo"></div>
+          <div><label>Destino</label><input id="ed-destino"></div>
+          <div><label>Ida</label><input id="ed-ida" type="date"></div>
+          <div><label>Vuelta</label><input id="ed-vuelta" type="date"></div>
+        </div>
+        <label>Pasajeros</label><input id="ed-pasajeros">
+        <label>Mensaje para el cliente</label><input id="ed-nota" placeholder="Ej: te armé dos opciones, la recomendada es...">
+        <details style="margin-top:12px">
+          <summary class="vacio" style="cursor:pointer">Ver mis preferencias</summary>
+          <div class="aviso" id="ed-prefs" style="margin-top:8px"></div>
+        </details>
+      </div>
+
+      <div class="tarjeta">
+        <div class="barra" style="margin-bottom:8px">
+          <div class="pestanas opciones-pres" id="ed-pestanas-opciones"></div>
+          <button class="boton secundario chico" id="btn-add-opcion">+ Opción</button>
+        </div>
+        <div class="grilla-2">
+          <div><label>Nombre de la opción</label><input id="op-nombre"></div>
+          <div style="display:flex;align-items:end;gap:12px">
+            <label class="check" style="margin:0 0 10px"><input type="checkbox" id="op-recomendada"> Recomendada</label>
+            <button class="boton peligro chico" id="btn-borrar-opcion" style="margin-bottom:6px">Borrar opción</button>
+          </div>
+        </div>
+
+        <div class="editor-item editor-cabecera" style="margin-top:12px">
+          <div>Servicio</div><div>Qué es</div><div>Detalle</div><div>Mayorista</div><div style="text-align:right">Costo</div><div></div>
+        </div>
+        <div id="op-items"></div>
+        <div class="acciones" style="margin-top:10px">
+          <button class="boton secundario chico" id="btn-add-item">+ Agregar servicio</button>
+          <button class="boton chico" id="btn-ia">✨ Pegar lo que mandó el mayorista</button>
+        </div>
+        <div class="aviso resumen-opcion" id="op-resumen"></div>
+      </div>
+
+      <div class="tarjeta">
+        <label>Incluye</label><input id="ed-incluye">
+        <label>No incluye</label><input id="ed-noincluye">
+        <div class="acciones" style="margin-top:16px">
+          <button class="boton" id="btn-guardar">Guardar</button>
+          <button class="boton secundario" id="btn-ver">Ver como el cliente</button>
+          <a class="boton whatsapp" id="btn-enviar" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+          <button class="boton secundario" id="btn-copiar">Copiar link</button>
+        </div>
+        <p class="aviso oculto" id="ed-ok" style="margin-top:12px"></p>
+      </div>
+    </section>
+  </main>
+
+  <div class="fondo-modal oculto" id="modal">
+    <div class="modal" id="modal-contenido"></div>
+  </div>
+
+  <footer class="pie">Demo · los datos se guardan solo en este navegador</footer>
+
+  <script src="config.js"></script>
+  <script src="datos.js"></script>
+  <script src="panel.js"></script>
+</body>
+</html>

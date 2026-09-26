@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contanos tu viaje</title>
+  <link rel="stylesheet" href="../comun/estilos.css">
+  <link rel="stylesheet" href="turismo.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor angosto">
+      <h1 id="agencia-nombre"></h1>
+      <p id="agencia-lema"></p>
+    </div>
+  </header>
+
+  <main class="contenedor angosto">
+    <form id="form-consulta" novalidate>
+      <!-- Paso 1 -->
+      <section class="tarjeta" data-paso="1">
+        <div class="progreso"><div class="hecho"></div><div></div><div></div></div>
+        <div class="paso">Paso 1 de 3</div>
+        <h2>¿A dónde querés ir?</h2>
+        <label for="destino">Destino (si ya lo tenés)</label>
+        <input id="destino" name="destino" placeholder="Ej: Florianópolis, Europa, el Caribe...">
+        <label>Tipo de viaje</label>
+        <div class="chips" id="chips-tipo"></div>
+        <div class="grilla-2">
+          <div><label for="fechaIda">Fecha de ida</label><input id="fechaIda" name="fechaIda" type="date"></div>
+          <div><label for="fechaVuelta">Fecha de vuelta</label><input id="fechaVuelta" name="fechaVuelta" type="date"></div>
+        </div>
+        <label for="mesAproximado">¿No tenés fechas? Decinos el mes aproximado</label>
+        <input id="mesAproximado" name="mesAproximado" placeholder="Ej: enero, vacaciones de invierno...">
+        <label class="check"><input type="checkbox" id="flexible" name="flexible" checked> Mis fechas son flexibles</label>
+        <div class="grilla-2">
+          <div><label for="adultos">Adultos</label><input id="adultos" name="adultos" type="number" min="1" value="2"></div>
+          <div><label for="ninos">Menores</label><input id="ninos" name="ninos" type="number" min="0" value="0"></div>
+        </div>
+        <div id="bloque-edades" class="oculto">
+          <label for="edadesNinos">Edades de los menores</label>
+          <input id="edadesNinos" name="edadesNinos" placeholder="Ej: 4 y 7">
+        </div>
+        <button type="button" class="boton ancho" data-ir="2">Siguiente</button>
+      </section>
+
+      <!-- Paso 2 -->
+      <section class="tarjeta oculto" data-paso="2">
+        <div class="progreso"><div class="hecho"></div><div class="hecho"></div><div></div></div>
+        <div class="paso">Paso 2 de 3</div>
+        <h2>¿Qué necesitás?</h2>
+        <label>Marcá todo lo que quieras que te coticemos</label>
+        <div class="chips" id="chips-servicios"></div>
+        <label for="presupuesto">Presupuesto aproximado</label>
+        <select id="presupuesto" name="presupuesto"></select>
+        <label for="decision">¿Cuándo pensás decidir?</label>
+        <select id="decision" name="decision"></select>
+        <div class="acciones" style="margin-top:16px">
+          <button type="button" class="boton secundario" data-ir="1">Atrás</button>
+          <button type="button" class="boton" data-ir="3" style="flex:1">Siguiente</button>
+        </div>
+      </section>
+
+      <!-- Paso 3 -->
+      <section class="tarjeta oculto" data-paso="3">
+        <div class="progreso"><div class="hecho"></div><div class="hecho"></div><div class="hecho"></div></div>
+        <div class="paso">Paso 3 de 3</div>
+        <h2>¿Cómo te contactamos?</h2>
+        <label for="nombre">Nombre y apellido</label>
+        <input id="nombre" name="nombre" required autocomplete="name">
+        <label for="whatsapp">WhatsApp</label>
+        <input id="whatsapp" name="whatsapp" required inputmode="tel" placeholder="Ej: 341 555 1234" autocomplete="tel">
+        <label for="email">Email (opcional)</label>
+        <input id="email" name="email" type="email" autocomplete="email">
+        <label for="comentario">¿Algo más que tengamos que saber?</label>
+        <input id="comentario" name="comentario" placeholder="Ej: es nuestra luna de miel, viajamos con mascota...">
+        <div class="acciones" style="margin-top:16px">
+          <button type="button" class="boton secundario" data-ir="2">Atrás</button>
+          <button type="submit" class="boton" style="flex:1">Enviar consulta</button>
+        </div>
+      </section>
+    </form>
+
+    <section class="tarjeta exito oculto" id="gracias">
+      <div class="icono">🧳</div>
+      <h2 id="gracias-titulo"></h2>
+      <p id="gracias-texto"></p>
+      <button class="boton secundario" id="btn-otra">Hacer otra consulta</button>
+    </section>
+  </main>
+
+  <footer class="pie no-imprimir">Demo · <a href="panel.html">Ver el panel de la agencia</a></footer>
+
+  <script src="config.js"></script>
+  <script src="datos.js"></script>
+  <script src="consulta.js"></script>
+</body>
+</html>

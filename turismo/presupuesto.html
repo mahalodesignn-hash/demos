@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tu presupuesto de viaje</title>
+  <link rel="stylesheet" href="../comun/estilos.css">
+  <link rel="stylesheet" href="turismo.css">
+</head>
+<body>
+  <header class="encabezado portada">
+    <div class="sub" id="p-agencia"></div>
+    <h1 id="p-titulo"></h1>
+    <div class="sub" id="p-sub"></div>
+  </header>
+
+  <main class="contenedor angosto">
+    <section class="tarjeta" id="p-intro"></section>
+    <div id="p-opciones"></div>
+    <section class="tarjeta" id="p-condiciones"></section>
+    <div class="acciones no-imprimir" style="justify-content:center;margin-bottom:12px">
+      <a class="boton whatsapp" id="p-consultar" target="_blank" rel="noopener">Tengo una consulta</a>
+      <button class="boton secundario" onclick="window.print()">Descargar PDF</button>
+    </div>
+    <section class="tarjeta oculto" id="p-error">
+      <h2>No encontramos este presupuesto</h2>
+      <p class="vacio">El link está incompleto. Pedile a tu agente que te lo reenvíe.</p>
+    </section>
+  </main>
+
+  <footer class="pie" id="p-pie"></footer>
+
+  <script src="config.js"></script>
+  <script src="datos.js"></script>
+  <script src="presupuesto.js"></script>
+</body>
+</html>

@@ -10,6 +10,7 @@ La documentación del negocio (clientes, precios, decisiones) vive en el Drive c
 |---|---|---|
 | `reservas/` | Página para sacar turno (`index.html`) + panel del consultorio (`panel.html`) con agenda, recordatorios por WhatsApp, cancelaciones y **lista de espera que recupera turnos** | Consultorios, estética, peluquerías |
 | `stock/` | Control de stock: ventas y entradas con lector de código de barras, stock bajo, **pedido automático al proveedor por WhatsApp**, conteos y movimientos | Librerías, ferreterías, dietéticas, comercios |
+| `turismo/` | Formulario del viajero con **calificación caliente / tibio / frío** (`consulta.html`), panel de la agencia con preferencias y editor de presupuestos con hasta 3 opciones (`panel.html`), y **presupuesto para el cliente** como link con los datos adentro + PDF (`presupuesto.html`) | Agencias de viaje |
 | `comun/` | Estilos compartidos | — |
 
 `index.html` en la raíz es una portada con links a las dos demos.
