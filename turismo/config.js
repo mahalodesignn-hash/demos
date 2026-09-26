@@ -1,11 +1,11 @@
 // Configuración de la agencia. Para adaptar la demo a la clienta real, se cambia este archivo.
 const AGENCIA = {
-  nombre: "Viajes Horizonte",
-  agente: "Carla",
+  nombre: "Byway Turismo",
+  agente: "Byway",
   lema: "Viajes armados a tu medida",
   whatsapp: "5493410000000",
-  email: "hola@viajeshorizonte.com",
-  colorPrincipal: "#c2410c",
+  email: "", // completar con el mail real de la agencia
+  colorPrincipal: "#0e6ba8",
   moneda: "USD",
   validezDias: 3, // cuántos días vale un presupuesto (los precios de los mayoristas cambian)
   tiposDeViaje: ["Playa", "Nieve", "Ciudad", "Naturaleza / aventura", "Crucero", "Luna de miel", "Otro"],

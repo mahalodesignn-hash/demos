@@ -55,5 +55,5 @@ if (!P) {
       Las tarifas aéreas y hoteleras pueden cambiar hasta el momento de la reserva.</p>`;
 
   $("p-consultar").href = linkWhatsApp(P.agencia.whatsapp, `Hola ${P.agencia.agente}! Tengo una consulta sobre el presupuesto "${P.titulo}".`);
-  $("p-pie").textContent = `${P.agencia.nombre} · ${P.agencia.email}`;
+  $("p-pie").textContent = [P.agencia.nombre, P.agencia.email, "Demo"].filter(Boolean).join(" · ");
 }
