@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tipografías y colores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;700&family=Figtree:wght@400;700&family=IBM+Plex+Sans:wght@400;700&family=Inter:wght@400;700&family=Josefin+Sans:wght@400;700&family=Lato:wght@400;700&family=Lora:wght@600;700&family=Manrope:wght@400;700&family=Montserrat:wght@400;700&family=Mulish:wght@400;700&family=Nunito:wght@400;800&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;600&family=Rubik:wght@400;600&family=Source+Sans+3:wght@400;700&family=Work+Sans:wght@400;700&display=swap">
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260928">
+  <style>
+    .seccion { margin-bottom: 36px; }
+    .seccion > h2 { font-size: 1.3rem; margin: 8px 0 4px; }
+    .muestra { border-radius: var(--radio); overflow: hidden; border: 1px solid var(--borde); box-shadow: var(--sombra); position: sticky; top: 8px; z-index: 3; margin-bottom: 14px; }
+    .muestra .cab { color: white; padding: 16px 18px; }
+    .muestra .cab h3 { margin: 0; font-size: 1.35rem; }
+    .muestra .cab p { margin: 2px 0 0; opacity: .9; font-size: .9rem; }
+    .muestra .cuerpo { padding: 14px 18px; }
+    .muestra .fila-m { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .muestra .num { font-size: 1.6rem; font-weight: 700; }
+    .muestra .btn { display: inline-block; color: white; border-radius: 10px; padding: 9px 14px; font-weight: 700; font-size: .9rem; }
+    .muestra .chip-m { border-radius: 999px; padding: 3px 10px; font-size: .78rem; font-weight: 700; }
+    .elegido { font-size: .85rem; color: var(--texto-suave); margin: 8px 0 0; }
+    .grupo-titulo { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--texto-suave); margin: 14px 0 6px; }
+    .fuentes { display: grid; gap: 8px; }
+    .fuente { text-align: left; border: 1px solid var(--borde); background: white; border-radius: 10px; padding: 10px 12px; cursor: pointer; color: var(--texto); }
+    .fuente.activa { border: 2px solid var(--texto); }
+    .fuente .nombre-f { font-size: 1.15rem; }
+    .fuente small { display: block; color: var(--texto-suave); font-family: system-ui, sans-serif; font-size: .8rem; margin-top: 2px; }
+    .paletas { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+    .paleta { border: 1px solid var(--borde); background: white; border-radius: 10px; padding: 8px; cursor: pointer; text-align: left; color: var(--texto); }
+    .paleta.activa { border: 2px solid var(--texto); }
+    .paleta .barras { display: flex; height: 26px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; }
+    .paleta .barras span { flex: 1; }
+    .paleta small { color: var(--texto-suave); display: block; font-size: .75rem; }
+    #resumen-final { white-space: pre-line; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor angosto">
+      <h1>Tipografías y colores</h1>
+      <p>5 opciones por demo. Tocá una tipografía y una paleta para ver cómo queda.</p>
+    </div>
+  </header>
+
+  <main class="contenedor angosto" id="secciones"></main>
+
+  <div class="contenedor angosto">
+    <section class="tarjeta">
+      <h2>Lo que elegimos</h2>
+      <p class="vacio" style="margin-top:0">Copialo y pasámelo para aplicarlo en las demos.</p>
+      <div class="aviso" id="resumen-final"></div>
+      <button class="boton ancho" id="btn-copiar">Copiar elección</button>
+    </section>
+  </div>
+  <footer class="pie">Soluciones para vos · propuesta de estilo</footer>
+
+  <script>
+    const DEMOS = [
+      {
+        id: "turnos", titulo: "Turnos (consultorios y estética)", negocio: "Consultorio Odontológico Sonrisa", sub: "Sacá tu turno online",
+        chip: "confirmado", numero: "27", etiqueta: "turnos esta semana", boton: "Confirmar turno",
+        idea: "Tiene que transmitir confianza, limpieza y calma, sin verse frío.",
+        fuentes: [
+          { t: "Nunito", c: "Nunito", nota: "Redondeada y amable. Ideal odontología, pediatría y estética." },
+          { t: "DM Sans", c: "DM Sans", nota: "Moderna, prolija y clínica. Se lee perfecto en celular." },
+          { t: "Figtree", c: "Figtree", nota: "Cercana y clara. Profesional sin ser seria." },
+          { t: "Manrope", c: "Manrope", nota: "Moderna y premium. Para clínicas de estética." },
+          { t: "Lora", c: "Source Sans 3", nota: "Títulos con serifa elegante + texto limpio. Estética y spa." },
+        ],
+        paletas: [
+          { n: "Verde agua clínico (actual)", p: "#0f766e", f: "#f0fdfa", a: "#5eead4" },
+          { n: "Azul confianza", p: "#1d5fa8", f: "#eff6ff", a: "#93c5fd" },
+          { n: "Salvia calma", p: "#5b7f6a", f: "#f3f7f4", a: "#b7d3c0" },
+          { n: "Lavanda estética", p: "#7c5cbf", f: "#f6f3ff", a: "#c4b5fd" },
+          { n: "Nude elegante", p: "#b0706a", f: "#fbf5f3", a: "#e8c4bd" },
+        ],
+      },
+      {
+        id: "stock", titulo: "Control de stock (comercios)", negocio: "Librería Papelito", sub: "Control de stock",
+        chip: "stock bajo", numero: "$ 23.700", etiqueta: "vendido hoy", boton: "Pedir al proveedor",
+        idea: "Práctica y fácil de leer rápido, con números claros. Que parezca herramienta de trabajo.",
+        fuentes: [
+          { t: "Inter", c: "Inter", nota: "La más legible para números y tablas. Muy profesional." },
+          { t: "Work Sans", c: "Work Sans", nota: "Robusta y comercial. Buena presencia en pantallas chicas." },
+          { t: "IBM Plex Sans", c: "IBM Plex Sans", nota: "Técnica y ordenada. Transmite sistema serio." },
+          { t: "Rubik", c: "Rubik", nota: "Amigable y redondeada. Para comercio de barrio." },
+          { t: "Archivo", c: "Archivo", nota: "Compacta y fuerte, estilo etiqueta de precio." },
+        ],
+        paletas: [
+          { n: "Azul comercio (actual)", p: "#1d4ed8", f: "#f5f7fb", a: "#93c5fd" },
+          { n: "Verde inventario", p: "#15803d", f: "#f3faf5", a: "#86efac" },
+          { n: "Naranja mostrador", p: "#ea580c", f: "#fff7ed", a: "#fdba74" },
+          { n: "Pizarra + amarillo", p: "#334155", f: "#f8fafc", a: "#eab308" },
+          { n: "Bordó almacén", p: "#9f1239", f: "#fdf4f5", a: "#fda4af" },
+        ],
+      },
+      {
+        id: "turismo", titulo: "Turismo (Byway)", negocio: "Byway Turismo", sub: "Viajes armados a tu medida",
+        chip: "🔥 caliente", numero: "USD 3.466", etiqueta: "Florianópolis en familia", boton: "Quiero esta opción",
+        idea: "Aspiracional: que den ganas de viajar, pero que se vea confiable para pagar.",
+        fuentes: [
+          { t: "Montserrat", c: "Montserrat", nota: "Clásica de agencias y turismo. Segura y moderna." },
+          { t: "Poppins", c: "Poppins", nota: "Geométrica y viajera. Muy usada en apps de viajes." },
+          { t: "Playfair Display", c: "Lato", nota: "Títulos elegantes tipo revista de viajes + texto claro." },
+          { t: "Josefin Sans", c: "Josefin Sans", nota: "Boutique con aire vintage. Viajes de autor." },
+          { t: "Cormorant Garamond", c: "Mulish", nota: "Premium y romántica. Lunas de miel y lujo." },
+        ],
+        paletas: [
+          { n: "Azul océano (actual)", p: "#0e6ba8", f: "#f2f8fc", a: "#7dd3fc" },
+          { n: "Turquesa Caribe", p: "#0891b2", f: "#effbfd", a: "#fcd34d" },
+          { n: "Terracota atardecer", p: "#c2410c", f: "#fff6f0", a: "#fdba74" },
+          { n: "Verde selva", p: "#166534", f: "#f2f8f3", a: "#bef264" },
+          { n: "Noche + dorado", p: "#1e3a5f", f: "#f8f6f0", a: "#c9a227" },
+        ],
+      },
+    ];
+
+    const eleccion = {};
+    const cont = document.getElementById("secciones");
+
+    DEMOS.forEach((d) => {
+      eleccion[d.id] = { f: 0, p: 0 };
+      const s = document.createElement("section");
+      s.className = "seccion";
+      s.innerHTML = `
+        <h2>${d.titulo}</h2>
+        <p class="vacio" style="margin-top:0">${d.idea}</p>
+        <div class="muestra" id="m-${d.id}">
+          <div class="cab"><h3>${d.negocio}</h3><p>${d.sub}</p></div>
+          <div class="cuerpo">
+            <div class="fila-m"><span class="num">${d.numero}</span><span class="vacio">${d.etiqueta}</span><span class="chip-m">${d.chip}</span></div>
+            <p style="margin:8px 0 12px">Martina López · Consulta / control · 09:30 hs</p>
+            <span class="btn">${d.boton}</span>
+          </div>
+          <p class="elegido" style="padding:0 18px 12px"></p>
+        </div>
+        <div class="grupo-titulo">Tipografías</div>
+        <div class="fuentes">${d.fuentes.map((f, i) => `
+          <button class="fuente" data-demo="${d.id}" data-f="${i}">
+            <span class="nombre-f" style="font-family:'${f.t}';font-weight:700">${i + 1}. ${f.t}${f.c !== f.t ? " + " + f.c : ""}</span>
+            <span style="font-family:'${f.c}';display:block;margin-top:2px">${d.negocio} · 0123456789</span>
+            <small>${f.nota}</small></button>`).join("")}</div>
+        <div class="grupo-titulo">Colores</div>
+        <div class="paletas">${d.paletas.map((p, i) => `
+          <button class="paleta" data-demo="${d.id}" data-p="${i}">
+            <div class="barras"><span style="background:${p.p}"></span><span style="background:${p.a}"></span><span style="background:${p.f}"></span></div>
+            <strong style="font-size:.85rem">${p.n}</strong><small>${p.p}</small></button>`).join("")}</div>`;
+      cont.appendChild(s);
+    });
+
+    // La muestra de ejemplo de turnos habla de pacientes; en las otras, cambia el texto de la fila
+    document.querySelector("#m-stock .cuerpo p").textContent = "Cuaderno Rivadavia ABC · quedan 8 · mínimo 15";
+    document.querySelector("#m-turismo .cuerpo p").textContent = "Vuelo + hotel Jurerê · 10 noches · 2 adultos + 2 menores";
+
+    function aplicar(id) {
+      const d = DEMOS.find((x) => x.id === id);
+      const { f, p } = eleccion[id];
+      const fu = d.fuentes[f], pa = d.paletas[p];
+      const m = document.getElementById("m-" + id);
+      m.style.background = pa.f;
+      m.style.fontFamily = `'${fu.c}', system-ui, sans-serif`;
+      m.querySelector(".cab").style.background = pa.p;
+      m.querySelector("h3").style.fontFamily = `'${fu.t}', serif`;
+      m.querySelector(".num").style.fontFamily = `'${fu.t}', sans-serif`;
+      m.querySelector(".num").style.color = pa.p;
+      m.querySelector(".btn").style.background = pa.p;
+      const chip = m.querySelector(".chip-m");
+      chip.style.background = pa.a; chip.style.color = "#1f2933";
+      m.querySelector(".elegido").textContent = `${fu.t}${fu.c !== fu.t ? " + " + fu.c : ""} · ${pa.n}`;
+      document.querySelectorAll(`.fuente[data-demo=${id}]`).forEach((b) => b.classList.toggle("activa", +b.dataset.f === f));
+      document.querySelectorAll(`.paleta[data-demo=${id}]`).forEach((b) => b.classList.toggle("activa", +b.dataset.p === p));
+      resumen();
+    }
+
+    function resumen() {
+      document.getElementById("resumen-final").textContent = DEMOS.map((d) => {
+        const fu = d.fuentes[eleccion[d.id].f], pa = d.paletas[eleccion[d.id].p];
+        return `${d.titulo}: tipografía ${eleccion[d.id].f + 1} (${fu.t}${fu.c !== fu.t ? " + " + fu.c : ""}), color ${eleccion[d.id].p + 1} (${pa.n})`;
+      }).join("\n");
+    }
+
+    document.querySelectorAll(".fuente").forEach((b) => b.onclick = () => { eleccion[b.dataset.demo].f = +b.dataset.f; aplicar(b.dataset.demo); });
+    document.querySelectorAll(".paleta").forEach((b) => b.onclick = () => { eleccion[b.dataset.demo].p = +b.dataset.p; aplicar(b.dataset.demo); });
+    DEMOS.forEach((d) => aplicar(d.id));
+
+    document.getElementById("btn-copiar").onclick = async () => {
+      const txt = document.getElementById("resumen-final").textContent;
+      try { await navigator.clipboard.writeText(txt); alert("Copiado. Pegámelo en el chat."); } catch (e) { prompt("Copiá:", txt); }
+    };
+  </script>
+</body>
+</html>
