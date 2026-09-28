@@ -7,6 +7,11 @@ let opActual = 0;
 const $ = (id) => document.getElementById(id);
 
 $("agencia-nombre").textContent = AGENCIA.nombre;
+if (AGENCIA.logo) { $("agencia-logo").src = AGENCIA.logo; $("agencia-logo").alt = AGENCIA.nombre; $("agencia-logo").classList.remove("oculto"); }
+const opcionesVendedoras = AGENCIA.vendedoras.map((v) => `<option>${escapar(v.nombre)}</option>`).join("");
+$("filtro-vendedora").innerHTML = `<option value="">Todas las vendedoras</option>` + opcionesVendedoras;
+$("ed-vendedora").innerHTML = opcionesVendedoras;
+$("filtro-vendedora").onchange = () => pintarConsultas();
 
 function boton(texto, clase, onclick) {
   const b = document.createElement("button");
@@ -66,7 +71,7 @@ function pintarConsultas() {
   const filtro = $("filtro-nivel").value;
   const lista = datos.consultas
     .map((c) => ({ c, cal: calificar(c) }))
-    .filter(({ cal }) => !filtro || cal.nivel === filtro)
+    .filter(({ c, cal }) => (!filtro || cal.nivel === filtro) && (!$("filtro-vendedora").value || c.vendedora === $("filtro-vendedora").value))
     .sort((a, b) => b.cal.puntaje - a.cal.puntaje);
   const cont = $("lista-consultas");
   if (!lista.length) {
@@ -81,6 +86,7 @@ function pintarConsultas() {
     const pres = datos.presupuestos.find((p) => p.consultaId === c.id);
     const estado = pres ? `<span class="estado confirmado">presupuesto ${pres.estado}</span>` : "";
     fila.innerHTML = `<div class="quien">${escapar(c.nombre)} <span class="estado ${NIVELES[cal.nivel].clase}">${NIVELES[cal.nivel].texto}</span> ${estado}
+        <small class="vendedora-tag">👤 ${escapar(c.vendedora || "sin asignar")}</small>
         <small>${escapar(c.destino || c.tipo || "Destino a definir")} · ${escapar(resumenFechas(c))} · ${escapar(pasajerosTexto(c))} · ${escapar(textoDe(AGENCIA.presupuestos, c.presupuesto))}</small>
         <small class="motivos">${cal.motivos.join(" · ")}</small></div>
       <div class="acciones"></div>`;
@@ -105,11 +111,12 @@ function verConsulta(c) {
       <dt>Presupuesto</dt><dd>${escapar(textoDe(AGENCIA.presupuestos, c.presupuesto))}</dd>
       <dt>Decide</dt><dd>${escapar(textoDe(AGENCIA.decision, c.decision))}</dd>
       <dt>Comentario</dt><dd>${escapar(c.comentario || "—")}</dd>
+      <dt>Vendedora</dt><dd>${escapar(c.vendedora || "sin asignar")}</dd>
       <dt>Contacto</dt><dd>${escapar(c.whatsapp)}${c.email ? " · " + escapar(c.email) : ""}</dd>
     </dl>
     <div class="acciones" style="margin-top:16px">
       <a class="boton whatsapp chico" target="_blank" rel="noopener"
-        href="${linkWhatsApp(c.whatsapp, `Hola ${c.nombre.split(" ")[0]}! Soy ${AGENCIA.agente} de ${AGENCIA.nombre}. Recibí tu consulta por ${c.destino || "tu viaje"} y ya estoy buscando opciones 🙌`)}">Escribirle</a>
+        href="${linkWhatsApp(c.whatsapp, `Hola ${c.nombre.split(" ")[0]}! Soy ${c.vendedora || AGENCIA.agente} de ${AGENCIA.nombre}. Recibí tu consulta por ${c.destino || "tu viaje"} y ya estoy buscando opciones 🙌`)}">Escribirle</a>
       <button class="boton chico" id="modal-armar">Armar presupuesto</button>
       <button class="boton secundario chico" id="modal-cerrar">Cerrar</button>
     </div>`;
@@ -181,7 +188,7 @@ function abrirEditor(presId, consulta) {
       id: nuevoId(), consultaId: c ? c.id : null, estado: "borrador", emitido: hoyISO(),
       titulo: c ? `${c.destino || c.tipo || "Tu viaje"}` : "Nuevo presupuesto",
       destino: c ? c.destino : "", fechaIda: c ? c.fechaIda : "", fechaVuelta: c ? c.fechaVuelta : "",
-      pasajeros: c ? pasajerosTexto(c) : "", nota: "",
+      pasajeros: c ? pasajerosTexto(c) : "", nota: "", vendedora: (c && c.vendedora) || AGENCIA.vendedoras[0].nombre,
       incluye: "", noIncluye: "Gastos personales y todo lo no mencionado.",
       opciones: [{ nombre: "Opción 1", recomendada: true,
         items: (c ? c.servicios : ["vuelo"]).map((s) => itemVacio(s)) }],
@@ -195,6 +202,8 @@ function abrirEditor(presId, consulta) {
   $("ed-ida").value = editando.fechaIda;
   $("ed-vuelta").value = editando.fechaVuelta;
   $("ed-pasajeros").value = editando.pasajeros;
+  if (!editando.vendedora) editando.vendedora = (c && c.vendedora) || AGENCIA.vendedoras[0].nombre;
+  $("ed-vendedora").value = editando.vendedora;
   $("ed-nota").value = editando.nota;
   $("ed-incluye").value = editando.incluye;
   $("ed-noincluye").value = editando.noIncluye;
@@ -212,6 +221,7 @@ function abrirEditor(presId, consulta) {
 [["ed-titulo", "titulo"], ["ed-destino", "destino"], ["ed-ida", "fechaIda"], ["ed-vuelta", "fechaVuelta"],
   ["ed-pasajeros", "pasajeros"], ["ed-nota", "nota"], ["ed-incluye", "incluye"], ["ed-noincluye", "noIncluye"]]
   .forEach(([id, campo]) => { $(id).oninput = () => { editando[campo] = $(id).value; actualizarEnviar(); }; });
+$("ed-vendedora").onchange = () => { editando.vendedora = $("ed-vendedora").value; actualizarEnviar(); };
 
 function pintarOpciones() {
   const pest = $("ed-pestanas-opciones");
@@ -368,7 +378,7 @@ function guardarPresupuesto() {
 function actualizarEnviar() {
   const c = datos.consultas.find((x) => x.id === editando.consultaId);
   const tel = c ? c.whatsapp : "";
-  const msg = `Hola${c ? " " + c.nombre.split(" ")[0] : ""}! Te paso el presupuesto de tu viaje a ${editando.destino || "tu destino"} 🧳\n${linkPresupuesto(editando)}\nCualquier duda me escribís. ${AGENCIA.agente}`;
+  const msg = `Hola${c ? " " + c.nombre.split(" ")[0] : ""}! Te paso el presupuesto de tu viaje a ${editando.destino || "tu destino"} 🧳\n${linkPresupuesto(editando)}\nCualquier duda me escribís. ${editando.vendedora || AGENCIA.agente}, ${AGENCIA.nombre}`;
   $("btn-enviar").href = tel ? linkWhatsApp(tel, msg) : `https://wa.me/?text=${encodeURIComponent(msg)}`;
 }
 

@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Panel de la agencia</title>
-  <link rel="stylesheet" href="../comun/estilos.css?v=20260928">
-  <link rel="stylesheet" href="turismo.css?v=20260928">
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260928b">
+  <link rel="stylesheet" href="turismo.css?v=20260928b">
 </head>
 <body>
   <header class="encabezado">
     <div class="contenedor">
-      <h1 id="agencia-nombre"></h1>
-      <p>Panel de consultas y presupuestos</p>
+      <div class="marca-cab"><img class="logo-marca oculto" id="agencia-logo" alt="">
+      <div><h1 id="agencia-nombre"></h1>
+      <p>Panel de consultas y presupuestos</p></div></div>
     </div>
   </header>
 
@@ -36,6 +37,7 @@
     <section class="tarjeta" id="vista-consultas">
       <div class="barra" style="margin-bottom:4px">
         <h2 style="margin:0">Consultas</h2>
+        <select id="filtro-vendedora" style="width:auto"></select>
         <select id="filtro-nivel" style="width:auto">
           <option value="">Todas</option>
           <option value="caliente">🔥 Calientes</option>
@@ -138,7 +140,10 @@
           <div><label>Ida</label><input id="ed-ida" type="date"></div>
           <div><label>Vuelta</label><input id="ed-vuelta" type="date"></div>
         </div>
-        <label>Pasajeros</label><input id="ed-pasajeros">
+        <div class="grilla-2">
+          <div><label>Pasajeros</label><input id="ed-pasajeros"></div>
+          <div><label>Vendedora</label><select id="ed-vendedora"></select></div>
+        </div>
         <label>Mensaje para el cliente</label><input id="ed-nota" placeholder="Ej: te armé dos opciones, la recomendada es...">
         <details style="margin-top:12px">
           <summary class="vacio" style="cursor:pointer">Ver mis preferencias</summary>
@@ -190,10 +195,10 @@
 
   <footer class="pie">Demo · los datos se guardan solo en este navegador</footer>
 
-  <script src="config.js?v=20260928"></script>
-  <script src="datos.js?v=20260928"></script>
+  <script src="config.js?v=20260928b"></script>
+  <script src="datos.js?v=20260928b"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="panel.js?v=20260928"></script>
-  <script src="automatizaciones.js?v=20260928"></script>
+  <script src="panel.js?v=20260928b"></script>
+  <script src="automatizaciones.js?v=20260928b"></script>
 </body>
 </html>

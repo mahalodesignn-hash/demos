@@ -1,5 +1,11 @@
 /* Estilos propios de la demo de turismo (se suman a comun/estilos.css) */
 
+/* Logo de la agencia en los encabezados */
+.marca-cab { display: flex; align-items: center; gap: 12px; }
+.logo-marca { width: 54px; height: 54px; border-radius: 50%; background: white; flex: none; object-fit: contain; }
+.logo-marca.grande { width: 84px; height: 84px; margin-bottom: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+.vendedora-tag { font-size: .8rem; color: var(--texto-suave); }
+
 .grilla-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
 @media (max-width: 480px) { .grilla-2 { grid-template-columns: 1fr; } }
 

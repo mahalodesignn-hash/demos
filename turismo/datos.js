@@ -1,7 +1,7 @@
 // Capa de datos de la demo: todo se guarda en el navegador (localStorage).
 // En la versión real esto se reemplaza por una base de datos online.
 
-const CLAVE = "demo-turismo-v1";
+const CLAVE = "demo-turismo-v2"; // v2: suma vendedoras y pasajeros
 
 function hoyISO() {
   const f = new Date();
@@ -36,6 +36,24 @@ function escapar(txt) {
 
 function linkWhatsApp(telefono, mensaje) {
   return `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+}
+
+// ---------- Vendedoras ----------
+function vendedora(nombre) {
+  return AGENCIA.vendedoras.find((v) => v.nombre === nombre) || null;
+}
+
+// A quién le escribe el cliente: su vendedora (si está activado) o el número de la demo
+function whatsappDeContacto(nombreVendedora) {
+  const v = vendedora(nombreVendedora);
+  return AGENCIA.whatsappDeVendedoras && v ? v.whatsapp : AGENCIA.whatsapp;
+}
+
+// Reparte las consultas nuevas: le toca a la vendedora con menos consultas abiertas
+function asignarVendedora(datos) {
+  const carga = Object.fromEntries(AGENCIA.vendedoras.map((v) => [v.nombre, 0]));
+  datos.consultas.filter((c) => c.estado !== "vendida" && carga[c.vendedora] !== undefined).forEach((c) => carga[c.vendedora]++);
+  return Object.entries(carga).sort((a, b) => a[1] - b[1])[0][0];
 }
 
 function servicioPorId(id) {
@@ -117,7 +135,9 @@ function decodificarPresupuesto(txt) {
 // Arma lo que ve el cliente: sin costos ni margen, solo precios finales
 function versionCliente(pres, consulta, prefs) {
   return {
-    agencia: { nombre: AGENCIA.nombre, agente: AGENCIA.agente, whatsapp: AGENCIA.whatsapp, email: AGENCIA.email },
+    agencia: { nombre: AGENCIA.nombre, agente: pres.vendedora || AGENCIA.agente, whatsapp: whatsappDeContacto(pres.vendedora),
+      email: AGENCIA.email, detalle: AGENCIA.detalle, instagram: AGENCIA.instagram,
+      logo: AGENCIA.logo ? new URL(AGENCIA.logo, location.href).href : "" },
     cliente: consulta ? consulta.nombre : pres.cliente,
     titulo: pres.titulo,
     destino: pres.destino,
@@ -145,24 +165,24 @@ function datosDeEjemplo() {
       destino: "Florianópolis", tipo: "Playa", fechaIda: sumarDias(hoy, 70), fechaVuelta: sumarDias(hoy, 80),
       mesAproximado: "", flexible: true, adultos: 2, ninos: 2, edadesNinos: "6 y 9",
       servicios: ["vuelo", "alojamiento", "terrestre", "asistencia"], presupuesto: "800a1500", decision: "semana",
-      comentario: "Queremos algo cerca de la playa, con pileta para los chicos.", estado: "presupuestada" },
+      comentario: "Queremos algo cerca de la playa, con pileta para los chicos.", estado: "presupuestada", vendedora: "Ana Costa" },
     { id: "c2", creada: hoy, nombre: "Jorge Salinas", whatsapp: "5493415551002", email: "jsalinas@mail.com",
       destino: "Madrid y Roma", tipo: "Ciudad", fechaIda: "", fechaVuelta: "", mesAproximado: "Mayo",
       flexible: true, adultos: 2, ninos: 0, edadesNinos: "", servicios: ["vuelo", "alojamiento", "excursion", "asistencia"],
-      presupuesto: "1500a3000", decision: "mes", comentario: "Aniversario de casados, 15 días.", estado: "nueva" },
+      presupuesto: "1500a3000", decision: "mes", comentario: "Aniversario de casados, 15 días.", estado: "nueva", vendedora: "Micaela Senn" },
     { id: "c3", creada: sumarDias(hoy, -1), nombre: "Lucía Benítez", whatsapp: "5493415551003", email: "",
       destino: "Bariloche", tipo: "Nieve", fechaIda: sumarDias(hoy, 20), fechaVuelta: sumarDias(hoy, 27),
       mesAproximado: "", flexible: false, adultos: 4, ninos: 0, edadesNinos: "", servicios: ["vuelo", "alojamiento", "auto"],
-      presupuesto: "800a1500", decision: "semana", comentario: "Viaje con amigas.", estado: "nueva" },
+      presupuesto: "800a1500", decision: "semana", comentario: "Viaje con amigas.", estado: "nueva", vendedora: "Victoria Marcili" },
     { id: "c4", creada: sumarDias(hoy, -2), nombre: "Pablo Ortiz", whatsapp: "5493415551004", email: "",
       destino: "", tipo: "Playa", fechaIda: "", fechaVuelta: "", mesAproximado: "", flexible: true,
       adultos: 1, ninos: 0, edadesNinos: "", servicios: ["vuelo"], presupuesto: "nose", decision: "mirando",
-      comentario: "¿Qué hay barato para el Caribe?", estado: "nueva" },
+      comentario: "¿Qué hay barato para el Caribe?", estado: "nueva", vendedora: "Rocío Quinteros" },
   ];
   const presupuestos = [
     { id: "p1", consultaId: "c1", titulo: "Florianópolis en familia", destino: "Florianópolis, Brasil",
       fechaIda: consultas[0].fechaIda, fechaVuelta: consultas[0].fechaVuelta, pasajeros: "2 adultos + 2 menores (6 y 9)",
-      emitido: hoy, estado: "borrador",
+      emitido: hoy, estado: "borrador", vendedora: "Ana Costa",
       nota: "Armé dos opciones: una más económica en Canasvieiras y otra en Jurerê, que es más tranquila y tiene hoteles con pileta para chicos.",
       incluye: "Vuelos ida y vuelta con equipaje en bodega, traslados aeropuerto–hotel–aeropuerto, alojamiento con desayuno, asistencia al viajero.",
       noIncluye: "Comidas no mencionadas, excursiones opcionales, gastos personales.",

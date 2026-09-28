@@ -21,6 +21,7 @@ if (!P) {
   const primer = (P.cliente || "").split(" ")[0];
   document.title = `${P.titulo} · ${P.agencia.nombre}`;
   $("p-agencia").textContent = P.agencia.nombre;
+  if (P.agencia.logo) { $("p-logo").src = P.agencia.logo; $("p-logo").alt = P.agencia.nombre; $("p-logo").classList.remove("oculto"); }
   $("p-titulo").textContent = P.titulo;
   const fechas = P.fechaIda ? `${fechaLinda(P.fechaIda)}${P.fechaVuelta ? " – " + fechaLinda(P.fechaVuelta) : ""}` : "";
   $("p-sub").textContent = [P.destino, fechas, P.pasajeros].filter(Boolean).join(" · ");
@@ -55,5 +56,7 @@ if (!P) {
       Las tarifas aéreas y hoteleras pueden cambiar hasta el momento de la reserva.</p>`;
 
   $("p-consultar").href = linkWhatsApp(P.agencia.whatsapp, `Hola ${P.agencia.agente}! Tengo una consulta sobre el presupuesto "${P.titulo}".`);
-  $("p-pie").textContent = [P.agencia.nombre, P.agencia.email, "Demo"].filter(Boolean).join(" · ");
+  $("p-pie").innerHTML = [escapar(P.agencia.nombre), escapar(P.agencia.detalle || ""),
+    P.agencia.instagram ? `<a href="https://www.instagram.com/${encodeURIComponent(P.agencia.instagram)}/" target="_blank" rel="noopener">@${escapar(P.agencia.instagram)}</a>` : "",
+    escapar(P.agencia.email || ""), "Demo"].filter(Boolean).join(" · ");
 }

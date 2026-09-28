@@ -6,6 +6,9 @@ const form = $("form-consulta");
 
 $("agencia-nombre").textContent = AGENCIA.nombre;
 $("agencia-lema").textContent = AGENCIA.lema;
+if (AGENCIA.logo) { $("agencia-logo").src = AGENCIA.logo; $("agencia-logo").alt = AGENCIA.nombre; $("agencia-logo").classList.remove("oculto"); }
+$("vendedora").innerHTML = `<option value="">No, la que esté disponible</option>` +
+  AGENCIA.vendedoras.map((v) => `<option>${escapar(v.nombre)}</option>`).join("");
 document.title = `Contanos tu viaje · ${AGENCIA.nombre}`;
 
 function chip(nombre, valor, texto, tipo) {
@@ -65,6 +68,7 @@ form.onsubmit = (e) => {
     estado: "nueva",
   };
   const datos = cargar();
+  consulta.vendedora = f.get("vendedora") || asignarVendedora(datos);
   datos.consultas.unshift(consulta);
   guardar(datos);
 
@@ -72,8 +76,8 @@ form.onsubmit = (e) => {
   const primer = nombre.split(" ")[0];
   $("gracias-titulo").textContent = `¡Gracias, ${primer}!`;
   $("gracias-texto").textContent = nivel === "frio"
-    ? `Recibimos tu consulta. ${AGENCIA.agente} la va a revisar y te escribe por WhatsApp con ideas para tu viaje.`
-    : `Recibimos tu consulta. ${AGENCIA.agente} ya está buscando opciones y te escribe por WhatsApp con tu presupuesto.`;
+    ? `Recibimos tu consulta. ${consulta.vendedora} la va a revisar y te escribe por WhatsApp con ideas para tu viaje.`
+    : `Recibimos tu consulta. ${consulta.vendedora} ya está buscando opciones y te escribe por WhatsApp con tu presupuesto.`;
   form.classList.add("oculto");
   $("gracias").classList.remove("oculto");
   window.scrollTo({ top: 0, behavior: "smooth" });

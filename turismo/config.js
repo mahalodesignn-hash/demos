@@ -2,10 +2,23 @@
 const AGENCIA = {
   nombre: "Byway Turismo",
   agente: "Byway",
-  lema: "Viajes armados a tu medida",
-  whatsapp: "5493410000000",
+  lema: "Transformamos tu forma de viajar",
+  detalle: "Más de 10 años de trayectoria · Legajo 19727",
+  instagram: "bywayturismo",
+  logo: "img/logo-circulo.png", // sacado de su Linktree
+  whatsapp: "5493410000000", // número de la demo (no es de Byway)
   email: "", // completar con el mail real de la agencia
-  colorPrincipal: "#0e6ba8",
+  colorPrincipal: "#d6304a", // coral de su logo (#FA485C), un poco más oscuro para que el texto blanco se lea bien
+  // Vendedoras (de su Linktree). Cada consulta y presupuesto queda a nombre de una.
+  vendedoras: [
+    { nombre: "Ana Costa", whatsapp: "5493416906069" },
+    { nombre: "Micaela Senn", whatsapp: "5493462638457" },
+    { nombre: "Victoria Marcili", whatsapp: "5493400657248" },
+    { nombre: "Rocío Quinteros", whatsapp: "5493412178605" },
+  ],
+  // false: en la demo los botones de WhatsApp del cliente van al número de la demo, NO a las vendedoras
+  // (para no mandarles mensajes de prueba). Poner true cuando Byway lo use de verdad.
+  whatsappDeVendedoras: false,
   moneda: "USD",
   validezDias: 3, // cuántos días vale un presupuesto (los precios de los mayoristas cambian)
   tiposDeViaje: ["Playa", "Nieve", "Ciudad", "Naturaleza / aventura", "Crucero", "Luna de miel", "Otro"],

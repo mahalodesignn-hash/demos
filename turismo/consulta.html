@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contanos tu viaje</title>
-  <link rel="stylesheet" href="../comun/estilos.css?v=20260928">
-  <link rel="stylesheet" href="turismo.css?v=20260928">
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260928b">
+  <link rel="stylesheet" href="turismo.css?v=20260928b">
 </head>
 <body>
   <header class="encabezado">
     <div class="contenedor angosto">
-      <h1 id="agencia-nombre"></h1>
-      <p id="agencia-lema"></p>
+      <div class="marca-cab"><img class="logo-marca oculto" id="agencia-logo" alt="">
+      <div><h1 id="agencia-nombre"></h1>
+      <p id="agencia-lema"></p></div></div>
     </div>
   </header>
 
@@ -72,6 +73,8 @@
         <input id="whatsapp" name="whatsapp" required inputmode="tel" placeholder="Ej: 341 555 1234" autocomplete="tel">
         <label for="email">Email (opcional)</label>
         <input id="email" name="email" type="email" autocomplete="email">
+        <label for="vendedora">¿Ya hablaste con alguna de nuestras vendedoras?</label>
+        <select id="vendedora" name="vendedora"></select>
         <label for="comentario">¿Algo más que tengamos que saber?</label>
         <input id="comentario" name="comentario" placeholder="Ej: es nuestra luna de miel, viajamos con mascota...">
         <div class="acciones" style="margin-top:16px">
@@ -91,8 +94,8 @@
 
   <footer class="pie no-imprimir">Demo · <a href="panel.html">Ver el panel de la agencia</a></footer>
 
-  <script src="config.js?v=20260928"></script>
-  <script src="datos.js?v=20260928"></script>
-  <script src="consulta.js?v=20260928"></script>
+  <script src="config.js?v=20260928b"></script>
+  <script src="datos.js?v=20260928b"></script>
+  <script src="consulta.js?v=20260928b"></script>
 </body>
 </html>
