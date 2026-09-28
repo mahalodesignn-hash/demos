@@ -28,7 +28,7 @@ function refrescar() {
 }
 
 function mostrarVista(v) {
-  ["consultas", "presupuestos", "preferencias", "editor"].forEach((x) =>
+  ["consultas", "buscar", "pasajeros", "presupuestos", "preferencias", "editor"].forEach((x) =>
     $("vista-" + x).classList.toggle("oculto", x !== v));
   document.querySelectorAll(".pestana[data-vista]").forEach((p) => p.classList.toggle("activa", p.dataset.vista === v));
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -267,7 +267,7 @@ function pintarItems() {
       <input placeholder="Ej: Hotel Jurerê · 10 noches" value="${escapar(it.titulo)}">
       <input placeholder="Detalle (régimen, equipaje...)" value="${escapar(it.detalle)}">
       <input placeholder="Mayorista" value="${escapar(it.proveedor)}">
-      <div><input type="number" min="0" step="1" value="${it.costo}" style="text-align:right"><div class="precio"></div></div>
+      <div><input type="number" min="0" step="1" value="${it.costo}" placeholder="Costo USD" title="Costo del mayorista (USD)" style="text-align:right"><div class="precio"></div></div>
       <button class="x" title="Quitar">×</button>`;
     const [sel, titulo, detalle, prov] = fila.querySelectorAll("select, input");
     const costo = fila.querySelector("input[type=number]");
@@ -422,6 +422,7 @@ document.querySelectorAll(".pestana[data-vista]").forEach((p) => {
   p.onclick = () => {
     if (p.dataset.vista === "preferencias") { pintarPreferencias(); $("prefs-ok").classList.add("oculto"); }
     mostrarVista(p.dataset.vista);
+    if (typeof alMostrarVista === "function") alMostrarVista(p.dataset.vista);
   };
 });
 

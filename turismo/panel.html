@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Panel de la agencia</title>
-  <link rel="stylesheet" href="../comun/estilos.css">
-  <link rel="stylesheet" href="turismo.css">
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260928">
+  <link rel="stylesheet" href="turismo.css?v=20260928">
 </head>
 <body>
   <header class="encabezado">
@@ -21,6 +21,8 @@
     <div class="barra">
       <div class="pestanas">
         <button class="pestana activa" data-vista="consultas">Consultas</button>
+        <button class="pestana" data-vista="buscar">🔎 Buscar</button>
+        <button class="pestana" data-vista="pasajeros">🧾 Pasajeros</button>
         <button class="pestana" data-vista="presupuestos">Presupuestos</button>
         <button class="pestana" data-vista="preferencias">Mis preferencias</button>
       </div>
@@ -43,6 +45,54 @@
       </div>
       <p class="vacio" style="margin-top:0">Ordenadas por intención de compra: arriba las que más chances tienen de viajar.</p>
       <div id="lista-consultas"></div>
+    </section>
+
+    <!-- Buscar en todos los sitios (agente) -->
+    <section class="tarjeta oculto" id="vista-buscar">
+      <h2>🔎 Buscar en todos mis sitios</h2>
+      <p class="vacio" style="margin-top:0">Cargás el viaje una sola vez y el agente entra a cada mayorista y plataforma, busca y te trae todo comparado.
+        <br><em>Demo: los resultados son simulados. En la versión real el agente entra a tus sitios con tu usuario, como lo harías vos.</em></p>
+      <form id="form-buscar">
+        <label for="bus-consulta">Buscar para</label>
+        <select id="bus-consulta"></select>
+        <div class="grilla-2">
+          <div><label for="bus-origen">Origen</label><input id="bus-origen" value="Rosario"></div>
+          <div><label for="bus-destino">Destino</label><input id="bus-destino" required></div>
+          <div><label for="bus-ida">Ida</label><input id="bus-ida" type="date" required></div>
+          <div><label for="bus-vuelta">Vuelta</label><input id="bus-vuelta" type="date" required></div>
+          <div><label for="bus-adultos">Adultos</label><input id="bus-adultos" type="number" min="1" value="2"></div>
+          <div><label for="bus-ninos">Menores</label><input id="bus-ninos" type="number" min="0" value="0"></div>
+        </div>
+        <label>Qué buscar</label>
+        <div class="chips" id="bus-servicios"></div>
+        <button class="boton ancho" type="submit">Buscar en todos mis sitios</button>
+      </form>
+    </section>
+    <section class="tarjeta oculto" id="bus-progreso"></section>
+    <section class="oculto" id="bus-resultados"></section>
+
+    <!-- Pasajeros -->
+    <section class="tarjeta oculto" id="vista-pasajeros">
+      <h2>🧾 Pasajeros</h2>
+      <p class="vacio" style="margin-top:0">Cargás los datos <strong>una sola vez</strong> (o sacás una foto del DNI o pasaporte) y el sistema completa todas las planillas: mayorista, asistencia al viajero y hotel.</p>
+      <label for="pas-viaje">Viaje</label>
+      <select id="pas-viaje"></select>
+      <div id="lista-pasajeros" style="margin-top:12px"></div>
+      <div class="acciones" style="margin-top:12px">
+        <label class="boton" for="pas-foto" style="cursor:pointer">📷 Cargar desde foto del DNI / pasaporte</label>
+        <input type="file" id="pas-foto" accept="image/*" capture="environment" class="oculto">
+        <button class="boton secundario" id="btn-pas-nuevo">+ Cargar a mano</button>
+      </div>
+      <div class="aviso" style="margin-top:16px">
+        <strong>📄 Planillas automáticas</strong>
+        <p style="margin:6px 0 10px">Con los datos de arriba se generan listas para mandar:</p>
+        <div class="acciones">
+          <button class="boton chico" data-planilla="mayorista">Planilla para el mayorista</button>
+          <button class="boton chico" data-planilla="asistencia">Solicitud de asistencia</button>
+          <button class="boton chico" data-planilla="rooming">Rooming list (hotel)</button>
+          <button class="boton chico secundario" data-planilla="todas">Descargar las 3</button>
+        </div>
+      </div>
     </section>
 
     <!-- Presupuestos -->
@@ -140,8 +190,10 @@
 
   <footer class="pie">Demo · los datos se guardan solo en este navegador</footer>
 
-  <script src="config.js"></script>
-  <script src="datos.js"></script>
-  <script src="panel.js"></script>
+  <script src="config.js?v=20260928"></script>
+  <script src="datos.js?v=20260928"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="panel.js?v=20260928"></script>
+  <script src="automatizaciones.js?v=20260928"></script>
 </body>
 </html>

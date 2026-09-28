@@ -119,8 +119,8 @@ input:focus, select:focus { outline: 2px solid var(--marca-suave); border-color:
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
   margin-bottom: 16px;
 }
-.pestanas { display: flex; gap: 4px; background: white; border: 1px solid var(--borde); border-radius: 10px; padding: 4px; }
-.pestana { border: 0; background: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; color: var(--texto-suave); }
+.pestanas { display: flex; gap: 4px; background: white; border: 1px solid var(--borde); border-radius: 10px; padding: 4px; max-width: 100%; overflow-x: auto; }
+.pestana { border: 0; background: none; padding: 8px 14px; border-radius: 8px; cursor: pointer; color: var(--texto-suave); white-space: nowrap; }
 .pestana.activa { background: var(--marca); color: white; }
 
 .metricas { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
@@ -164,6 +164,11 @@ input:focus, select:focus { outline: 2px solid var(--marca-suave); border-color:
 .pie a { color: var(--texto-suave); }
 
 @media (max-width: 560px) {
+  /* Métricas compactas: que no tapen la pantalla y se vea el contenido principal */
+  .metricas { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .metrica { padding: 10px; }
+  .metrica .numero { font-size: 1.2rem; }
+  .metrica .etiqueta { font-size: .72rem; line-height: 1.25; }
   .fila { grid-template-columns: 52px 1fr; }
   .fila .acciones { grid-column: 1 / -1; }
   .navegar-dia strong { min-width: 0; }

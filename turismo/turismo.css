@@ -33,7 +33,18 @@
 .editor-item .precio { font-size: .85rem; color: var(--texto-suave); padding-top: 9px; text-align: right; }
 .editor-cabecera { font-size: .78rem; color: var(--texto-suave); border-bottom: 0; padding-bottom: 0; }
 @media (max-width: 820px) {
-  .editor-item { grid-template-columns: 1fr 1fr; }
+  /* En celular cada servicio es una tarjetita: tipo, qué es y detalle a lo ancho; mayorista y costo lado a lado */
+  .editor-item {
+    grid-template-columns: 1fr 110px 32px;
+    grid-template-areas: "tipo tipo x" "titulo titulo titulo" "detalle detalle detalle" "prov costo costo";
+    background: var(--fondo); border: 1px solid var(--borde); border-radius: 10px; padding: 10px; margin-bottom: 10px;
+  }
+  .editor-item > :nth-child(1) { grid-area: tipo; }
+  .editor-item > :nth-child(2) { grid-area: titulo; }
+  .editor-item > :nth-child(3) { grid-area: detalle; }
+  .editor-item > :nth-child(4) { grid-area: prov; }
+  .editor-item > :nth-child(5) { grid-area: costo; }
+  .editor-item > :nth-child(6) { grid-area: x; }
   .editor-cabecera { display: none; }
 }
 .x { border: 0; background: none; color: var(--error); font-size: 1.2rem; cursor: pointer; }

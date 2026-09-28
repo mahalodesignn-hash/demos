@@ -191,5 +191,41 @@ function datosDeEjemplo() {
     mayoristas: "Mayorista Andes (aéreos), Mayorista Sol (Brasil y Caribe), Mayorista Europa (Europa).",
     notas: "Mandar siempre 2 o 3 opciones, marcar la recomendada. Aclarar que los precios pueden cambiar hasta reservar.",
   };
-  return { consultas, presupuestos, preferencias };
+  return { consultas, presupuestos, preferencias, pasajeros: pasajerosDeEjemplo() };
+}
+
+// ---------- Pasajeros ----------
+function pasajerosDeEjemplo() {
+  const P = (viajeId, apellido, nombre, sexo, nacimiento, dni, pasaporte, vencePasaporte, extra = {}) => ({
+    id: nuevoId(), viajeId, apellido, nombre, sexo, nacimiento, nacionalidad: "Argentina", dni, pasaporte,
+    vencePasaporte, email: "", telefono: "", observaciones: "", ...extra });
+  return [
+    P("c1", "Paz", "Mariana", "F", "1988-04-12", "33.456.789", "AAF123456", "2030-05-20", { email: "mariana@mail.com", telefono: "5493415551001" }),
+    P("c1", "Rossi", "Martín", "M", "1986-11-03", "32.111.222", "AAE654321", "2029-02-11"),
+    P("c1", "Rossi", "Tomás", "M", "2017-06-21", "55.321.987", "", "", { observaciones: "Menor, viaja con ambos padres" }),
+    P("c1", "Rossi", "Julia", "F", "2020-01-09", "58.765.432", "", "", { observaciones: "Menor, viaja con ambos padres" }),
+  ];
+}
+
+function edad(nacimientoISO, alDia = hoyISO()) {
+  if (!nacimientoISO) return "";
+  const [a, m, d] = nacimientoISO.split("-").map(Number);
+  const [ah, mh, dh] = alDia.split("-").map(Number);
+  return ah - a - (mh < m || (mh === m && dh < d) ? 1 : 0);
+}
+
+function fechaCortaAR(iso) {
+  if (!iso) return "";
+  const [a, m, d] = iso.split("-");
+  return `${d}/${m}/${a}`;
+}
+
+// Qué le falta a la ficha de un pasajero para poder reservar
+function faltantes(p, internacional = true) {
+  const f = [];
+  if (!p.nombre || !p.apellido) f.push("nombre");
+  if (!p.nacimiento) f.push("fecha de nacimiento");
+  if (!p.dni) f.push("DNI");
+  if (internacional && edad(p.nacimiento) >= 12 && !p.pasaporte) f.push("pasaporte");
+  return f;
 }

@@ -24,6 +24,18 @@ const AGENCIA = {
     { id: "mas3000", texto: "Más de USD 3.000 por persona" },
     { id: "nose", texto: "Todavía no lo sé" },
   ],
+  // Sitios donde busca la agente (mayoristas, plataformas, proveedores) y qué servicios tiene cada uno.
+  // En la demo los resultados son simulados; en la versión real el agente entra a cada sitio con su usuario.
+  // soloDestinos (opcional): el sitio solo se consulta para destinos que coinciden.
+  sitios: [
+    { nombre: "Mayorista Andes", tipos: ["vuelo", "terrestre"] },
+    { nombre: "Mayorista Sol", tipos: ["vuelo", "alojamiento", "terrestre", "excursion"] },
+    { nombre: "Mayorista Europa", tipos: ["vuelo", "alojamiento", "excursion"],
+      soloDestinos: /europa|espa[ñn]a|madrid|barcelona|roma|italia|francia|par[ií]s|londres|portugal|lisboa|grecia|alemania/i },
+    { nombre: "Airbnb", tipos: ["alojamiento"] },
+    { nombre: "Asistencia Global", tipos: ["asistencia"] },
+    { nombre: "Rentadora Sur", tipos: ["auto"] },
+  ],
   decision: [
     { id: "semana", texto: "Esta semana" },
     { id: "mes", texto: "Este mes" },
