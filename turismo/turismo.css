@@ -9,7 +9,7 @@
 /* ---------- Página de inicio ---------- */
 .inicio-principal {
   display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--texto);
-  border: 2px solid var(--marca); margin-top: -18px; position: relative;
+  border: 2px solid var(--marca); margin-top: 8px;
 }
 .inicio-principal strong { display: block; font-size: 1.15rem; color: var(--marca); }
 .inicio-principal small { display: block; color: var(--texto-suave); margin-top: 2px; }
