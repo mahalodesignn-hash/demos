@@ -24,8 +24,19 @@ function nuevoId() {
   return Math.random().toString(36).slice(2, 10);
 }
 
-function plata(n) {
-  return `${AGENCIA.moneda} ${Math.round(n).toLocaleString("es-AR")}`;
+function plata(n, moneda = AGENCIA.moneda) {
+  return `${moneda} ${Math.round(n).toLocaleString("es-AR")}`;
+}
+
+function siguienteNumeroCotizacion(datos) {
+  datos.contadorCotizaciones = (datos.contadorCotizaciones || 1000) + 1;
+  return `${AGENCIA.prefijoCotizacion}-${new Date().getFullYear()}-${String(datos.contadorCotizaciones).padStart(4, "0")}`;
+}
+
+// Link "Ver en Google" para un hotel: nombre sin la cantidad de noches + destino
+function linkGoogle(texto, destino) {
+  const limpio = texto.split("·")[0].trim();
+  return `https://www.google.com/search?q=${encodeURIComponent(`${limpio} ${destino || ""}`.trim())}`;
 }
 
 function escapar(txt) {
@@ -146,11 +157,17 @@ function versionCliente(pres, consulta, prefs) {
     pasajeros: pres.pasajeros,
     nota: pres.nota,
     emitido: pres.emitido || hoyISO(),
+    numero: pres.numero || "",
+    cantidadPax: pres.cantidadPax || 0,
+    moneda: pres.moneda || AGENCIA.moneda,
+    formaPago: pres.formaPago || "",
+    condiciones: AGENCIA.condiciones || "",
     validoHasta: sumarDias(pres.emitido || hoyISO(), AGENCIA.validezDias),
     opciones: pres.opciones.map((o) => ({
       nombre: o.nombre,
       recomendada: o.recomendada,
-      items: o.items.map((it) => ({ tipo: it.tipo, titulo: it.titulo, detalle: it.detalle, precio: Math.round(precioItem(it, prefs.margen)) })),
+      items: o.items.map((it) => ({ tipo: it.tipo, titulo: it.titulo, detalle: it.detalle, precio: Math.round(precioItem(it, prefs.margen)),
+        estrellas: it.estrellas || 0, link: it.tipo === "alojamiento" && it.titulo ? linkGoogle(it.titulo, pres.destino) : "" })),
     })),
     incluye: pres.incluye,
     noIncluye: pres.noIncluye,
@@ -182,7 +199,8 @@ function datosDeEjemplo() {
   const presupuestos = [
     { id: "p1", consultaId: "c1", titulo: "Florianópolis en familia", destino: "Florianópolis, Brasil",
       fechaIda: consultas[0].fechaIda, fechaVuelta: consultas[0].fechaVuelta, pasajeros: "2 adultos + 2 menores (6 y 9)",
-      emitido: hoy, estado: "borrador", vendedora: "Ana Costa",
+      emitido: hoy, estado: "borrador", vendedora: "Ana Costa", numero: "BYW-2026-1001", cantidadPax: 4, moneda: "USD",
+      formaPago: "Hasta 6 cuotas sin interés con tarjeta de crédito, o transferencia con descuento.",
       nota: "Armé dos opciones: una más económica en Canasvieiras y otra en Jurerê, que es más tranquila y tiene hoteles con pileta para chicos.",
       incluye: "Vuelos ida y vuelta con equipaje en bodega, traslados aeropuerto–hotel–aeropuerto, alojamiento con desayuno, asistencia al viajero.",
       noIncluye: "Comidas no mencionadas, excursiones opcionales, gastos personales.",
@@ -190,13 +208,13 @@ function datosDeEjemplo() {
         { nombre: "Opción Canasvieiras", recomendada: false, items: [
           { tipo: "vuelo", titulo: "Rosario → Florianópolis (vía Buenos Aires)", detalle: "Aerolíneas Argentinas · valija 23 kg", proveedor: "Mayorista Andes", costo: 1720 },
           { tipo: "terrestre", titulo: "Traslados in / out", detalle: "Privado, aeropuerto ↔ hotel", proveedor: "Mayorista Sol", costo: 90 },
-          { tipo: "alojamiento", titulo: "Pousada Mar Azul · 10 noches", detalle: "Habitación familiar · desayuno · a 1 cuadra del mar", proveedor: "Mayorista Sol", costo: 1150 },
+          { tipo: "alojamiento", titulo: "Pousada Mar Azul · 10 noches", detalle: "Habitación familiar · desayuno · a 1 cuadra del mar", proveedor: "Mayorista Sol", costo: 1150, estrellas: 3 },
           { tipo: "asistencia", titulo: "Asistencia al viajero 11 días", detalle: "Cobertura USD 60.000 por persona", proveedor: "Asistencia Global", costo: 160 },
         ] },
         { nombre: "Opción Jurerê", recomendada: true, items: [
           { tipo: "vuelo", titulo: "Rosario → Florianópolis (vía Buenos Aires)", detalle: "Aerolíneas Argentinas · valija 23 kg", proveedor: "Mayorista Andes", costo: 1720 },
           { tipo: "terrestre", titulo: "Traslados in / out", detalle: "Privado, aeropuerto ↔ hotel", proveedor: "Mayorista Sol", costo: 90 },
-          { tipo: "alojamiento", titulo: "Hotel Jurerê Praia · 10 noches", detalle: "Suite familiar · desayuno · pileta y club de niños", proveedor: "Mayorista Sol", costo: 1980 },
+          { tipo: "alojamiento", titulo: "Hotel Jurerê Praia · 10 noches", detalle: "Suite familiar · desayuno · pileta y club de niños", proveedor: "Mayorista Sol", costo: 1980, estrellas: 4 },
           { tipo: "asistencia", titulo: "Asistencia al viajero 11 días", detalle: "Cobertura USD 60.000 por persona", proveedor: "Asistencia Global", costo: 160 },
           { tipo: "excursion", titulo: "Paseo en barco a Ilha do Campeche", detalle: "Día completo, 4 personas", proveedor: "Mayorista Sol", costo: 180 },
         ] },
@@ -211,7 +229,7 @@ function datosDeEjemplo() {
     mayoristas: "Mayorista Andes (aéreos), Mayorista Sol (Brasil y Caribe), Mayorista Europa (Europa).",
     notas: "Mandar siempre 2 o 3 opciones, marcar la recomendada. Aclarar que los precios pueden cambiar hasta reservar.",
   };
-  return { consultas, presupuestos, preferencias, pasajeros: pasajerosDeEjemplo() };
+  return { consultas, presupuestos, preferencias, pasajeros: pasajerosDeEjemplo(), contadorCotizaciones: 1001 };
 }
 
 // ---------- Pasajeros ----------

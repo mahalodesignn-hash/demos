@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Viajes</title>
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260929">
+  <link rel="stylesheet" href="turismo.css?v=20260929">
+</head>
+<body>
+  <!-- Página de inicio: el link de la bio de Instagram. Reemplaza al Linktree, pero antes filtra. -->
+  <header class="encabezado portada">
+    <img class="logo-marca grande oculto" id="i-logo" alt="">
+    <h1 id="i-nombre"></h1>
+    <div class="sub" id="i-lema"></div>
+    <div class="sub" id="i-detalle" style="font-size:.85rem;margin-top:4px"></div>
+  </header>
+
+  <main class="contenedor angosto">
+    <a class="tarjeta inicio-principal" href="consulta.html">
+      <span class="ico-grande">✈️</span>
+      <span><strong>Armá tu viaje</strong><small>Contanos a dónde querés ir y te preparamos un presupuesto a medida. Te lleva 1 minuto.</small></span>
+      <span class="flecha">›</span>
+    </a>
+
+    <section class="tarjeta">
+      <h2>¿Ya sos cliente?</h2>
+      <p class="vacio" style="margin-top:0">Escribile directo a tu vendedora.</p>
+      <div id="i-vendedoras"></div>
+    </section>
+
+    <div class="acciones" style="justify-content:center">
+      <a class="boton secundario" id="i-instagram" target="_blank" rel="noopener">📸 Seguinos en Instagram</a>
+    </div>
+  </main>
+
+  <footer class="pie" id="i-pie"></footer>
+
+  <script src="config.js?v=20260929"></script>
+  <script src="datos.js?v=20260929"></script>
+  <script>
+    document.documentElement.style.setProperty("--marca", AGENCIA.colorPrincipal);
+    const $ = (id) => document.getElementById(id);
+    document.title = AGENCIA.nombre;
+    $("i-nombre").textContent = AGENCIA.nombre;
+    $("i-lema").textContent = AGENCIA.lema;
+    $("i-detalle").textContent = AGENCIA.detalle || "";
+    if (AGENCIA.logo) { $("i-logo").src = AGENCIA.logo; $("i-logo").alt = AGENCIA.nombre; $("i-logo").classList.remove("oculto"); }
+    const iniciales = (n) => n.split(" ").map((p) => p[0]).slice(0, 2).join("");
+    $("i-vendedoras").innerHTML = AGENCIA.vendedoras.map((v) => `
+      <a class="vendedora-link" target="_blank" rel="noopener"
+         href="${linkWhatsApp(whatsappDeContacto(v.nombre), `Hola ${v.nombre.split(" ")[0]}! Soy cliente de ${AGENCIA.nombre} y te quería consultar algo.`)}">
+        <span class="avatar">${escapar(iniciales(v.nombre))}</span>
+        <span>${escapar(v.nombre)}</span>
+        <span class="wa">WhatsApp</span>
+      </a>`).join("");
+    if (AGENCIA.instagram) $("i-instagram").href = `https://www.instagram.com/${AGENCIA.instagram}/`;
+    else $("i-instagram").classList.add("oculto");
+    $("i-pie").textContent = [AGENCIA.nombre, AGENCIA.detalle, "Demo"].filter(Boolean).join(" · ");
+  </script>
+</body>
+</html>

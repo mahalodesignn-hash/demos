@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tu presupuesto de viaje</title>
-  <link rel="stylesheet" href="../comun/estilos.css?v=20260928b">
-  <link rel="stylesheet" href="turismo.css?v=20260928b">
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260929">
+  <link rel="stylesheet" href="turismo.css?v=20260929">
 </head>
 <body>
   <header class="encabezado portada">
@@ -17,22 +17,25 @@
 
   <main class="contenedor angosto">
     <section class="tarjeta" id="p-intro"></section>
+    <section class="tarjeta" id="p-datos"></section>
+    <section class="tarjeta" id="p-incluye"></section>
     <div id="p-opciones"></div>
+    <section class="tarjeta" id="p-pago"></section>
     <section class="tarjeta" id="p-condiciones"></section>
-    <div class="acciones no-imprimir" style="justify-content:center;margin-bottom:12px">
-      <a class="boton whatsapp" id="p-consultar" target="_blank" rel="noopener">Tengo una consulta</a>
+    <div class="acciones no-imprimir" id="p-acciones" style="justify-content:center;margin-bottom:12px">
+      <a class="boton whatsapp" id="p-consultar" target="_blank" rel="noopener">📲 Contactar por WhatsApp</a>
       <button class="boton secundario" onclick="window.print()">Descargar PDF</button>
     </div>
     <section class="tarjeta oculto" id="p-error">
       <h2>No encontramos este presupuesto</h2>
-      <p class="vacio">El link está incompleto. Pedile a tu agente que te lo reenvíe.</p>
+      <p class="vacio">El link está incompleto. Pedile a tu vendedora que te lo reenvíe.</p>
     </section>
   </main>
 
   <footer class="pie" id="p-pie"></footer>
 
-  <script src="config.js?v=20260928b"></script>
-  <script src="datos.js?v=20260928b"></script>
-  <script src="presupuesto.js?v=20260928b"></script>
+  <script src="config.js?v=20260929"></script>
+  <script src="datos.js?v=20260929"></script>
+  <script src="presupuesto.js?v=20260929"></script>
 </body>
 </html>

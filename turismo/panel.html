@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Panel de la agencia</title>
-  <link rel="stylesheet" href="../comun/estilos.css?v=20260928b">
-  <link rel="stylesheet" href="turismo.css?v=20260928b">
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260929">
+  <link rel="stylesheet" href="turismo.css?v=20260929">
 </head>
 <body>
   <header class="encabezado">
@@ -143,7 +143,10 @@
         <div class="grilla-2">
           <div><label>Pasajeros</label><input id="ed-pasajeros"></div>
           <div><label>Vendedora</label><select id="ed-vendedora"></select></div>
+          <div><label>Cantidad de personas (para el precio por persona)</label><input id="ed-cantidad" type="number" min="1"></div>
+          <div><label>Moneda</label><select id="ed-moneda"><option>USD</option><option>ARS</option></select></div>
         </div>
+        <label>Forma de pago</label><input id="ed-formapago" placeholder="Ej: 6 cuotas sin interés">
         <label>Mensaje para el cliente</label><input id="ed-nota" placeholder="Ej: te armé dos opciones, la recomendada es...">
         <details style="margin-top:12px">
           <summary class="vacio" style="cursor:pointer">Ver mis preferencias</summary>
@@ -195,10 +198,10 @@
 
   <footer class="pie">Demo · los datos se guardan solo en este navegador</footer>
 
-  <script src="config.js?v=20260928b"></script>
-  <script src="datos.js?v=20260928b"></script>
+  <script src="config.js?v=20260929"></script>
+  <script src="datos.js?v=20260929"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="panel.js?v=20260928b"></script>
-  <script src="automatizaciones.js?v=20260928b"></script>
+  <script src="panel.js?v=20260929"></script>
+  <script src="automatizaciones.js?v=20260929"></script>
 </body>
 </html>

@@ -6,6 +6,32 @@
 .logo-marca.grande { width: 84px; height: 84px; margin-bottom: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
 .vendedora-tag { font-size: .8rem; color: var(--texto-suave); }
 
+/* ---------- Página de inicio ---------- */
+.inicio-principal {
+  display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--texto);
+  border: 2px solid var(--marca); margin-top: -18px; position: relative;
+}
+.inicio-principal strong { display: block; font-size: 1.15rem; color: var(--marca); }
+.inicio-principal small { display: block; color: var(--texto-suave); margin-top: 2px; }
+.ico-grande { font-size: 2rem; }
+.flecha { margin-left: auto; font-size: 2rem; color: var(--marca); }
+.vendedora-link {
+  display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--borde);
+  text-decoration: none; color: var(--texto); font-weight: 600;
+}
+.vendedora-link:last-child { border-bottom: 0; }
+.avatar {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; flex: none;
+  background: var(--marca-suave); color: var(--marca); font-weight: 800; font-size: .9rem;
+}
+.vendedora-link .wa { margin-left: auto; background: #25d366; color: #073b1d; font-size: .8rem; padding: 6px 12px; border-radius: 999px; }
+
+/* ---------- Links a buscadores reales ---------- */
+.web-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.web-link { font-size: .82rem; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--borde); background: white; color: var(--texto); text-decoration: none; }
+.web-link:hover { border-color: var(--marca); }
+.abrir-web { font-size: .8rem; color: var(--marca); font-weight: 600; text-decoration: none; }
+
 .grilla-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
 @media (max-width: 480px) { .grilla-2 { grid-template-columns: 1fr; } }
 
@@ -53,6 +79,7 @@
   .editor-item > :nth-child(6) { grid-area: x; }
   .editor-cabecera { display: none; }
 }
+.tipo-cel { display: grid; gap: 4px; }
 .x { border: 0; background: none; color: var(--error); font-size: 1.2rem; cursor: pointer; }
 
 .pestanas.opciones-pres { flex-wrap: wrap; }
@@ -74,6 +101,17 @@
 .linea small { display: block; color: var(--texto-suave); }
 .totales { padding: 14px 18px; border-top: 1px solid var(--borde); display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: 10px; }
 .totales .grande { font-size: 1.5rem; font-weight: 800; }
+
+.datos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dato { display: flex; gap: 10px; align-items: center; background: var(--fondo); border-radius: 10px; padding: 10px; }
+.dato-ico { width: 34px; height: 34px; border-radius: 50%; background: var(--marca); color: white; display: grid; place-items: center; flex: none; font-size: .95rem; }
+.dato small { display: block; color: var(--texto-suave); font-size: .75rem; }
+.dato strong { font-size: .92rem; }
+@media (max-width: 420px) { .datos-grid { grid-template-columns: 1fr; } }
+.checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.checklist li::before { content: "✓"; color: white; background: var(--marca); border-radius: 50%; width: 20px; height: 20px; display: inline-grid; place-items: center; font-size: .75rem; margin-right: 8px; }
+.titulo-seccion { font-size: 1.15rem; margin: 22px 0 10px; }
+.estrellas { color: #f5a623; font-size: .85rem; letter-spacing: 1px; }
 
 @media print {
   .no-imprimir { display: none !important; }

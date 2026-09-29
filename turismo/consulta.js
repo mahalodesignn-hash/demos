@@ -49,6 +49,23 @@ function normalizarTelefono(txt) {
   return "549" + n;
 }
 
+// Mensaje que le llega a la vendedora: todo lo que cargó el viajero, para no preguntar de nuevo
+function resumenParaVendedora(c) {
+  const fechas = c.fechaIda ? `del ${fechaLinda(c.fechaIda)}${c.fechaVuelta ? " al " + fechaLinda(c.fechaVuelta) : ""}${c.flexible ? " (flexible)" : ""}`
+    : c.mesAproximado ? `para ${c.mesAproximado}` : "sin fechas definidas";
+  const pax = `${c.adultos} adulto${c.adultos === 1 ? "" : "s"}${c.ninos ? ` + ${c.ninos} menor${c.ninos === 1 ? "" : "es"}${c.edadesNinos ? ` (${c.edadesNinos})` : ""}` : ""}`;
+  const servicios = c.servicios.map((s) => servicioPorId(s).nombre.toLowerCase()).join(", ");
+  return [
+    `Hola ${c.vendedora.split(" ")[0]}! Soy ${c.nombre}, acabo de completar la consulta en la web 🧳`,
+    `📍 Destino: ${c.destino || c.tipo || "a definir"}`,
+    `📅 Fechas: ${fechas}`,
+    `👥 Viajamos: ${pax}`,
+    `🧾 Quiero cotizar: ${servicios}`,
+    `💰 Presupuesto: ${textoDe(AGENCIA.presupuestos, c.presupuesto)}`,
+    c.comentario ? `📝 ${c.comentario}` : "",
+  ].filter(Boolean).join("\n");
+}
+
 form.onsubmit = (e) => {
   e.preventDefault();
   const f = new FormData(form);
@@ -78,6 +95,9 @@ form.onsubmit = (e) => {
   $("gracias-texto").textContent = nivel === "frio"
     ? `Recibimos tu consulta. ${consulta.vendedora} la va a revisar y te escribe por WhatsApp con ideas para tu viaje.`
     : `Recibimos tu consulta. ${consulta.vendedora} ya está buscando opciones y te escribe por WhatsApp con tu presupuesto.`;
+  const v = consulta.vendedora.split(" ")[0];
+  $("gracias-wa").textContent = `💬 Escribile a ${v} por WhatsApp`;
+  $("gracias-wa").href = linkWhatsApp(whatsappDeContacto(consulta.vendedora), resumenParaVendedora(consulta));
   form.classList.add("oculto");
   $("gracias").classList.remove("oculto");
   window.scrollTo({ top: 0, behavior: "smooth" });

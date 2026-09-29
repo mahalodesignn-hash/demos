@@ -151,7 +151,7 @@ function pintarPresupuestos() {
     fila.className = "fila";
     fila.style.gridTemplateColumns = "1fr auto";
     fila.innerHTML = `<div class="quien">${escapar(p.titulo)} <span class="estado ${clase}">${p.estado}</span>
-      <small>${escapar(c ? c.nombre : "")} · ${p.opciones.length} opciones · desde ${plata(total)}</small></div><div class="acciones"></div>`;
+      <small>${escapar(p.numero || "")} · ${escapar(c ? c.nombre : "")} · ${p.opciones.length} opciones · ${plata(total, p.moneda)}</small></div><div class="acciones"></div>`;
     const acc = fila.querySelector(".acciones");
     acc.appendChild(boton("Editar", "secundario", () => abrirEditor(p.id, c)));
     acc.appendChild(boton("Ver", "secundario", () => window.open(linkPresupuesto(p), "_blank")));
@@ -189,6 +189,8 @@ function abrirEditor(presId, consulta) {
       titulo: c ? `${c.destino || c.tipo || "Tu viaje"}` : "Nuevo presupuesto",
       destino: c ? c.destino : "", fechaIda: c ? c.fechaIda : "", fechaVuelta: c ? c.fechaVuelta : "",
       pasajeros: c ? pasajerosTexto(c) : "", nota: "", vendedora: (c && c.vendedora) || AGENCIA.vendedoras[0].nombre,
+      numero: siguienteNumeroCotizacion(datos), cantidadPax: c ? c.adultos + c.ninos : 2, moneda: AGENCIA.moneda,
+      formaPago: AGENCIA.formaPago,
       incluye: "", noIncluye: "Gastos personales y todo lo no mencionado.",
       opciones: [{ nombre: "Opción 1", recomendada: true,
         items: (c ? c.servicios : ["vuelo"]).map((s) => itemVacio(s)) }],
@@ -204,6 +206,14 @@ function abrirEditor(presId, consulta) {
   $("ed-pasajeros").value = editando.pasajeros;
   if (!editando.vendedora) editando.vendedora = (c && c.vendedora) || AGENCIA.vendedoras[0].nombre;
   $("ed-vendedora").value = editando.vendedora;
+  if (!editando.numero) editando.numero = siguienteNumeroCotizacion(datos);
+  if (!editando.cantidadPax) editando.cantidadPax = c ? c.adultos + c.ninos : 2;
+  if (!editando.moneda) editando.moneda = AGENCIA.moneda;
+  if (editando.formaPago === undefined) editando.formaPago = AGENCIA.formaPago;
+  $("ed-cantidad").value = editando.cantidadPax;
+  $("ed-moneda").value = editando.moneda;
+  $("ed-formapago").value = editando.formaPago;
+  $("editor-titulo").textContent += ` · ${editando.numero}`;
   $("ed-nota").value = editando.nota;
   $("ed-incluye").value = editando.incluye;
   $("ed-noincluye").value = editando.noIncluye;
@@ -222,6 +232,9 @@ function abrirEditor(presId, consulta) {
   ["ed-pasajeros", "pasajeros"], ["ed-nota", "nota"], ["ed-incluye", "incluye"], ["ed-noincluye", "noIncluye"]]
   .forEach(([id, campo]) => { $(id).oninput = () => { editando[campo] = $(id).value; actualizarEnviar(); }; });
 $("ed-vendedora").onchange = () => { editando.vendedora = $("ed-vendedora").value; actualizarEnviar(); };
+$("ed-cantidad").oninput = () => { editando.cantidadPax = Math.max(1, parseInt($("ed-cantidad").value, 10) || 1); pintarResumen(); };
+$("ed-moneda").onchange = () => { editando.moneda = $("ed-moneda").value; pintarItems(); };
+$("ed-formapago").oninput = () => { editando.formaPago = $("ed-formapago").value; };
 
 function pintarOpciones() {
   const pest = $("ed-pestanas-opciones");
@@ -273,17 +286,23 @@ function pintarItems() {
     const fila = document.createElement("div");
     fila.className = "editor-item";
     fila.innerHTML = `
-      <select>${AGENCIA.servicios.map((s) => `<option value="${s.id}" ${s.id === it.tipo ? "selected" : ""}>${s.icono} ${s.nombre}</option>`).join("")}</select>
+      <div class="tipo-cel"><select class="sel-tipo">${AGENCIA.servicios.map((s) => `<option value="${s.id}" ${s.id === it.tipo ? "selected" : ""}>${s.icono} ${s.nombre}</option>`).join("")}</select>
+        <select class="sel-estrellas" title="Estrellas del hotel">${[0, 1, 2, 3, 4, 5].map((n) => `<option value="${n}" ${n === (it.estrellas || 0) ? "selected" : ""}>${n ? "★".repeat(n) : "Sin estrellas"}</option>`).join("")}</select></div>
       <input placeholder="Ej: Hotel Jurerê · 10 noches" value="${escapar(it.titulo)}">
       <input placeholder="Detalle (régimen, equipaje...)" value="${escapar(it.detalle)}">
       <input placeholder="Mayorista" value="${escapar(it.proveedor)}">
-      <div><input type="number" min="0" step="1" value="${it.costo}" placeholder="Costo USD" title="Costo del mayorista (USD)" style="text-align:right"><div class="precio"></div></div>
+      <div><input type="number" min="0" step="1" value="${it.costo}" placeholder="Costo ${editando.moneda}" title="Costo del mayorista (${editando.moneda})" style="text-align:right"><div class="precio"></div></div>
       <button class="x" title="Quitar">×</button>`;
-    const [sel, titulo, detalle, prov] = fila.querySelectorAll("select, input");
+    const sel = fila.querySelector(".sel-tipo");
+    const estrellas = fila.querySelector(".sel-estrellas");
+    const [titulo, detalle, prov] = fila.querySelectorAll("input:not([type=number])");
+    const verEstrellas = () => estrellas.classList.toggle("oculto", it.tipo !== "alojamiento");
+    verEstrellas();
+    estrellas.onchange = () => { it.estrellas = parseInt(estrellas.value, 10); };
     const costo = fila.querySelector("input[type=number]");
     const precio = fila.querySelector(".precio");
-    const pintarPrecio = () => { precio.textContent = `→ ${plata(precioItem(it, datos.preferencias.margen))}`; };
-    sel.onchange = () => { it.tipo = sel.value; };
+    const pintarPrecio = () => { precio.textContent = `→ ${plata(precioItem(it, datos.preferencias.margen), editando.moneda)}`; };
+    sel.onchange = () => { it.tipo = sel.value; verEstrellas(); };
     titulo.oninput = () => { it.titulo = titulo.value; };
     detalle.oninput = () => { it.detalle = detalle.value; };
     prov.oninput = () => { it.proveedor = prov.value; };
@@ -301,9 +320,10 @@ function pintarResumen() {
   const m = datos.preferencias.margen;
   const costo = op.items.reduce((s, it) => s + it.costo, 0);
   const total = totalOpcion(op, m);
-  $("op-resumen").innerHTML = `<span>Costo mayoristas: <strong>${plata(costo)}</strong></span>
-    <span>Precio al cliente: <strong>${plata(total)}</strong></span>
-    <span>Tu ganancia (${m}%): <strong>${plata(total - costo)}</strong></span>`;
+  const mon = editando.moneda, pax = editando.cantidadPax || 1;
+  $("op-resumen").innerHTML = `<span>Costo mayoristas: <strong>${plata(costo, mon)}</strong></span>
+    <span>Precio al cliente: <strong>${plata(total, mon)}</strong>${pax > 1 ? ` (${plata(total / pax, mon)} por persona)` : ""}</span>
+    <span>Tu ganancia (${m}%): <strong>${plata(total - costo, mon)}</strong></span>`;
 }
 
 $("btn-add-item").onclick = () => {

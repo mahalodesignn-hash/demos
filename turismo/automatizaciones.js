@@ -63,6 +63,62 @@ function semilla(txt) {
   return () => ((h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0) % 1000) / 1000;
 }
 
+// ---------- Links a los buscadores reales (se abren con destino, fechas y pasajeros cargados) ----------
+const IATA = { rosario: "ROS", "buenos aires": "BUE", cordoba: "COR", córdoba: "COR", mendoza: "MDZ", bariloche: "BRC", salta: "SLA",
+  iguazu: "IGR", iguazú: "IGR", ushuaia: "USH", "el calafate": "FTE", florianopolis: "FLN", florianópolis: "FLN", "rio de janeiro": "RIO",
+  "río de janeiro": "RIO", salvador: "SSA", "salvador de bahia": "SSA", "salvador de bahía": "SSA", "sao paulo": "SAO", "são paulo": "SAO",
+  maceio: "MCZ", maceió: "MCZ", natal: "NAT", recife: "REC", "porto seguro": "BPS", cancun: "CUN", cancún: "CUN", "punta cana": "PUJ",
+  miami: "MIA", orlando: "ORL", "nueva york": "NYC", madrid: "MAD", barcelona: "BCN", roma: "ROM", paris: "PAR", parís: "PAR",
+  londres: "LON", lisboa: "LIS", santiago: "SCL", lima: "LIM", cusco: "CUZ", "punta del este": "PDP", montevideo: "MVD", aruba: "AUA" };
+
+function codigoIATA(ciudad) {
+  const c = (ciudad || "").toLowerCase().split(/[,(]/)[0].trim();
+  return IATA[c] || null;
+}
+
+function urlWeb(sitio, q) {
+  const dest = q.destino.split(/[,(]/)[0].trim();
+  const d = encodeURIComponent(dest);
+  const yymmdd = (iso) => iso.slice(2).replace(/-/g, "");
+  const o = codigoIATA(q.origen), de = codigoIATA(dest);
+  switch (sitio.web) {
+    case "googleVuelos":
+      return `https://www.google.com/travel/flights?hl=es-419&q=${encodeURIComponent(`vuelos de ${q.origen} a ${dest} ${q.ida} al ${q.vuelta}`)}`;
+    case "skyscanner":
+      return o && de
+        ? `https://www.skyscanner.com.ar/transporte/vuelos/${o.toLowerCase()}/${de.toLowerCase()}/${yymmdd(q.ida)}/${yymmdd(q.vuelta)}/?adultsv2=${q.adultos}${q.ninos ? `&childrenv2=${Array(q.ninos).fill(8).join("%7C")}` : ""}`
+        : "https://www.skyscanner.com.ar/";
+    case "booking":
+      return `https://www.booking.com/searchresults.es.html?ss=${d}&checkin=${q.ida}&checkout=${q.vuelta}&group_adults=${q.adultos}&group_children=${q.ninos}&no_rooms=1`;
+    case "airbnb":
+      return `https://www.airbnb.com.ar/s/${d}/homes?checkin=${q.ida}&checkout=${q.vuelta}&adults=${q.adultos}&children=${q.ninos}`;
+    case "tripadvisor":
+      return `https://www.tripadvisor.com.ar/Search?q=${encodeURIComponent("qué hacer en " + dest)}`;
+    case "getyourguide":
+      return `https://www.getyourguide.es/s/?q=${d}`;
+    case "rentalcars":
+      return "https://www.rentalcars.com/es/";
+    default:
+      return "";
+  }
+}
+
+// Links sueltos para abrir todas las búsquedas reales de una vez (una fila por rubro)
+function pintarLinksWeb(q) {
+  const extra = { terrestre: [["Traslados en Google", `https://www.google.com/search?q=${encodeURIComponent("traslado aeropuerto " + q.destino)}`]],
+    excursion: [["Qué hacer (Google Maps)", `https://www.google.com/maps/search/${encodeURIComponent("qué hacer en " + q.destino)}`]],
+    asistencia: [["Comparar asistencias", `https://www.google.com/search?q=${encodeURIComponent("asistencia al viajero " + q.destino)}`]] };
+  const filas = q.servicios.map((tipo) => {
+    const links = AGENCIA.sitios.filter((s) => s.web && s.tipos.includes(tipo)).map((s) => [s.nombre, urlWeb(s, q)]).concat(extra[tipo] || []);
+    if (!links.length) return "";
+    const sv = servicioPorId(tipo);
+    return `<div style="margin-top:10px"><strong style="font-size:.9rem">${sv.icono} ${escapar(sv.nombre)}</strong><div class="web-links">` +
+      links.map(([n, u]) => `<a class="web-link" href="${u}" target="_blank" rel="noopener">${escapar(n)} ↗</a>`).join("") + `</div></div>`;
+  }).join("");
+  return `<div class="tarjeta"><h2>🌐 Abrir las búsquedas reales</h2>
+    <p class="vacio" style="margin:0">Cada link abre la página con el destino, las fechas y los pasajeros ya cargados. Así comparás los precios de verdad con lo que trajo el agente.</p>${filas}</div>`;
+}
+
 function sitiosPara(q) {
   return AGENCIA.sitios.filter((s) => s.tipos.some((t) => q.servicios.includes(t)) && (!s.soloDestinos || s.soloDestinos.test(q.destino)));
 }
@@ -77,7 +133,7 @@ function generarResultados(q) {
   const sitiosDe = (tipo) => sitiosPara(q).filter((s) => s.tipos.includes(tipo));
   q.servicios.forEach((tipo) => {
     sitiosDe(tipo).forEach((sitio) => {
-      const n = tipo === "alojamiento" || tipo === "vuelo" ? 3 : 2;
+      const n = sitio.web ? 2 : tipo === "alojamiento" || tipo === "vuelo" ? 3 : 2;
       for (let i = 0; i < n; i++) {
         let it;
         if (tipo === "vuelo") {
@@ -111,7 +167,7 @@ function generarResultados(q) {
           it = { titulo: `Auto ${cat} · ${noches} días`, detalle: "Seguro total · km libre",
             costo: Math.round((cat === "SUV" ? 62 : 38) * noches + r() * 60) };
         }
-        res.push({ id: nuevoId(), tipo, sitio: sitio.nombre, ...it });
+        res.push({ id: nuevoId(), tipo, sitio: sitio.nombre, url: sitio.web ? urlWeb(sitio, q) : "", ...it });
       }
     });
   });
@@ -208,7 +264,7 @@ function pintarResultados() {
   const m = datos.preferencias.margen;
   const cont = $("bus-resultados");
   cont.classList.remove("oculto");
-  cont.innerHTML = q.servicios.map((tipo) => {
+  cont.innerHTML = pintarLinksWeb(q) + q.servicios.map((tipo) => {
     const s = servicioPorId(tipo);
     const lista = ordenar(resultados.filter((r) => r.tipo === tipo));
     const baratoId = [...lista].sort((a, b) => a.costo - b.costo)[0]?.id;
@@ -217,7 +273,8 @@ function pintarResultados() {
         <input type="checkbox" data-res="${it.id}" ${elegidos.has(it.id) ? "checked" : ""} style="width:20px;height:20px">
         <div class="quien"><strong>${escapar(it.titulo)}</strong>
           ${it.preferido ? `<span class="estado confirmado">⭐ tus preferencias</span>` : ""}${it.id === baratoId ? `<span class="estado pendiente">más barato</span>` : ""}
-          <small>${escapar(it.detalle)}</small><small>${escapar(it.sitio)}${it.motivos.length ? " · " + escapar(it.motivos.join(", ")) : ""}</small></div>
+          <small>${escapar(it.detalle)}</small><small>${escapar(it.sitio)}${it.motivos.length ? " · " + escapar(it.motivos.join(", ")) : ""}</small>
+          ${it.url ? `<a class="abrir-web" href="${it.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Abrir en ${escapar(it.sitio)} ↗</a>` : ""}</div>
         <div style="text-align:right"><strong>${plata(it.costo)}</strong><small class="vacio" style="display:block">al cliente ${plata(it.costo * (1 + m / 100))}</small></div>
       </label>`).join("") + `</div>`;
   }).join("") + `<div class="tarjeta" style="position:sticky;bottom:8px;z-index:2">

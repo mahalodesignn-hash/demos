@@ -21,6 +21,9 @@ const AGENCIA = {
   whatsappDeVendedoras: false,
   moneda: "USD",
   validezDias: 3, // cuántos días vale un presupuesto (los precios de los mayoristas cambian)
+  prefijoCotizacion: "BYW", // número de cotización: BYW-2026-0001
+  formaPago: "Hasta 6 cuotas sin interés con tarjeta de crédito, o transferencia con descuento.",
+  condiciones: "Tarifas sujetas a disponibilidad y modificación sin previo aviso hasta el momento de la reserva y emisión.",
   tiposDeViaje: ["Playa", "Nieve", "Ciudad", "Naturaleza / aventura", "Crucero", "Luna de miel", "Otro"],
   servicios: [
     { id: "vuelo", nombre: "Vuelos", icono: "✈️" },
@@ -41,14 +44,24 @@ const AGENCIA = {
   // En la demo los resultados son simulados; en la versión real el agente entra a cada sitio con su usuario.
   // soloDestinos (opcional): el sitio solo se consulta para destinos que coinciden.
   sitios: [
+    // Mayoristas (portales con usuario de la agencia)
     { nombre: "Mayorista Andes", tipos: ["vuelo", "terrestre"] },
     { nombre: "Mayorista Sol", tipos: ["vuelo", "alojamiento", "terrestre", "excursion"] },
     { nombre: "Mayorista Europa", tipos: ["vuelo", "alojamiento", "excursion"],
       soloDestinos: /europa|espa[ñn]a|madrid|barcelona|roma|italia|francia|par[ií]s|londres|portugal|lisboa|grecia|alemania/i },
-    { nombre: "Airbnb", tipos: ["alojamiento"] },
+    // Buscadores públicos: además de los resultados, tienen botón para abrir la búsqueda real con los datos cargados
+    { nombre: "Google Vuelos", tipos: ["vuelo"], web: "googleVuelos" },
+    { nombre: "Skyscanner", tipos: ["vuelo"], web: "skyscanner" },
+    { nombre: "Booking", tipos: ["alojamiento"], web: "booking" },
+    { nombre: "Airbnb", tipos: ["alojamiento"], web: "airbnb" },
+    { nombre: "TripAdvisor", tipos: ["excursion"], web: "tripadvisor" },
+    { nombre: "GetYourGuide", tipos: ["excursion", "terrestre"], web: "getyourguide" },
+    { nombre: "Rentalcars", tipos: ["auto"], web: "rentalcars" },
+    // Proveedores directos
     { nombre: "Asistencia Global", tipos: ["asistencia"] },
     { nombre: "Rentadora Sur", tipos: ["auto"] },
   ],
+
   decision: [
     { id: "semana", texto: "Esta semana" },
     { id: "mes", texto: "Este mes" },
