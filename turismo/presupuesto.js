@@ -14,6 +14,14 @@ try {
   if (m) P = decodificarPresupuesto(m[1]);
 } catch (e) { P = null; }
 
+// Link corto de ejemplo para mostrar la demo: presupuesto.html?ejemplo
+if (!P && new URLSearchParams(location.search).has("ejemplo")) {
+  const d = datosDeEjemplo();
+  const pres = d.presupuestos[0];
+  P = versionCliente(pres, d.consultas.find((c) => c.id === pres.consultaId), d.preferencias);
+  P.incluye = P.incluye || "Vuelos con valija, traslados, alojamiento con desayuno, asistencia al viajero, asesoramiento Byway";
+}
+
 if (!P) {
   mostrarError();
 } else {
