@@ -22,7 +22,7 @@ $("carta").innerHTML = LOCAL.categorias.map((c) => `
   <h2 class="cat-titulo" id="cat-${slug(c.nombre)}">${escapar(c.nombre)}</h2>
   ${c.items.map((it) => `
     <article class="plato">
-      <div class="foto">${it.emoji}</div>
+      <div class="foto${it.foto ? " con-foto" : ""}"${it.foto ? ` style="background-image:url('${it.foto}')"` : ""}>${it.foto ? "" : it.emoji}</div>
       <div>
         <h3>${escapar(it.nombre)}</h3>
         <p>${escapar(it.desc)}</p>
@@ -30,7 +30,7 @@ $("carta").innerHTML = LOCAL.categorias.map((c) => `
         <div class="pie-plato">
           <span class="precio">${plata(it.precio)}</span>
           <span class="acciones">
-            ${it.modelo ? `<button class="btn-ar" data-ar="${it.id}">🧊 Ver en 3D</button>` : ""}
+            ${it.modelo ? `<button class="btn-ar" data-ar="${it.id}">🧊 Ver en 3D${it.escaneado ? " · real" : ""}</button>` : ""}
             <button class="boton chico" data-agregar="${it.id}">+ Agregar</button>
           </span>
         </div>
@@ -171,6 +171,7 @@ function verEn3D(it) {
         <button slot="ar-button" class="boton-ar-grande">📱 Ver en mi mesa</button>
       </model-viewer>
     </div>
+    ${it.escaneado ? `<p class="aviso" style="font-size:.82rem;margin:10px 0 0">📸 Este plato es un <strong>escaneo real</strong> (fotogrametría): así se ve un plato fotografiado desde todos los ángulos.</p>` : ""}
     <p class="vacio" id="ar-ayuda" style="font-size:.88rem;margin:10px 0">Girá el plato con el dedo. Tocá <strong>Ver en mi mesa</strong>, apuntá la cámara a la mesa y aparece en <strong>tamaño real</strong>.</p>
     <div class="barra" style="margin:0"><strong>${plata(it.precio)}</strong>
       <button class="boton" id="ar-agregar">+ Agregar al pedido</button></div>

@@ -10,6 +10,7 @@
 .cat-titulo { font-size: 1.15rem; margin: 18px 0 8px; scroll-margin-top: 60px; }
 
 .plato { display: grid; grid-template-columns: 76px 1fr; gap: 12px; background: white; border: 1px solid var(--borde); border-radius: var(--radio); padding: 12px; margin-bottom: 10px; box-shadow: var(--sombra); }
+.plato .foto.con-foto { background-size: cover; background-position: center; }
 .plato .foto { width: 76px; height: 76px; border-radius: 12px; background: var(--marca-suave); display: grid; place-items: center; font-size: 2.3rem; }
 .plato h3 { margin: 0; font-size: 1rem; }
 .plato p { margin: 2px 0 6px; color: var(--texto-suave); font-size: .88rem; }
