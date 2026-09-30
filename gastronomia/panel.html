@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel del local</title>
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260930">
+  <link rel="stylesheet" href="gastronomia.css?v=20260930">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <h1 id="local-nombre"></h1>
+      <p>Panel del mozo y la cocina</p>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <section class="metricas" id="metricas"></section>
+
+    <section id="llamadas"></section>
+
+    <div class="barra">
+      <div class="pestanas">
+        <button class="pestana activa" data-vista="pedidos">🍳 Pedidos</button>
+        <button class="pestana" data-vista="mesas">🪑 Mesas</button>
+        <button class="pestana" data-vista="resenas">⭐ Reseñas</button>
+      </div>
+      <div class="acciones">
+        <button class="boton secundario chico" id="btn-sonido">🔔 Activar sonido</button>
+        <button class="boton secundario chico" id="btn-reiniciar">Reiniciar demo</button>
+      </div>
+    </div>
+
+    <section id="vista-pedidos">
+      <div class="tablero" id="tablero"></div>
+    </section>
+
+    <section class="tarjeta oculto" id="vista-mesas">
+      <h2>Mesas</h2>
+      <p class="vacio" style="margin-top:0">🟠 con pedido abierto · 🔴 llamando al mozo o pidiendo la cuenta</p>
+      <div class="mesas" id="mesas"></div>
+    </section>
+
+    <section class="oculto" id="vista-resenas">
+      <div class="tarjeta">
+        <h2>⭐ Reseñas con NFC</h2>
+        <p class="vacio" style="margin-top:0">Plaquita NFC + QR en cada mesa → página del local → reseña en Google o comentario privado para el dueño.</p>
+        <div class="metricas" id="metricas-resenas"></div>
+        <a class="boton secundario chico" id="link-resena" target="_blank">Ver la página que abre la plaquita</a>
+      </div>
+      <div class="tarjeta">
+        <h2>💬 Comentarios privados</h2>
+        <div id="privados"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">Demo · los datos se guardan solo en este navegador · <a id="link-carta" target="_blank">Abrir la carta de la mesa 5</a></footer>
+
+  <script src="config.js?v=20260930"></script>
+  <script src="datos.js?v=20260930"></script>
+  <script src="panel.js?v=20260930"></script>
+</body>
+</html>

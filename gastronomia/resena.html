@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>¿Cómo estuvo?</title>
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260930">
+  <link rel="stylesheet" href="gastronomia.css?v=20260930">
+</head>
+<body>
+  <!-- Página que abre la plaquita NFC (o el QR) de la mesa. Muestra las dos opciones a todos:
+       Google no permite filtrar para mandar solo las reseñas buenas ("review gating"). -->
+  <header class="encabezado portada">
+    <div style="font-size:3rem" id="r-emoji"></div>
+    <h1 id="r-nombre"></h1>
+    <div class="sub">¡Gracias por venir! ¿Cómo estuvo?</div>
+  </header>
+
+  <main class="contenedor angosto" style="margin-top:16px">
+    <div id="opciones">
+      <a class="gran-opcion google" id="r-google" target="_blank" rel="noopener">⭐ Dejar una reseña en Google
+        <small>Nos ayuda muchísimo a que más gente nos conozca</small></a>
+      <button class="gran-opcion privado" id="r-privado">💬 Contarle algo al dueño
+        <small>Una sugerencia o algo que no te gustó, en privado</small></button>
+    </div>
+
+    <form class="tarjeta oculto" id="r-form">
+      <h2>Contanos</h2>
+      <label for="r-texto">Tu comentario</label>
+      <textarea id="r-texto" rows="4" required style="width:100%;padding:10px;border:1px solid var(--borde);border-radius:10px;font:inherit"></textarea>
+      <label for="r-contacto">WhatsApp o mail (opcional, si querés que te respondamos)</label>
+      <input id="r-contacto">
+      <button class="boton ancho" type="submit">Enviar</button>
+    </form>
+
+    <section class="tarjeta exito oculto" id="r-gracias">
+      <div class="icono">🙌</div>
+      <h2>¡Gracias!</h2>
+      <p>El dueño lo va a leer hoy mismo.</p>
+    </section>
+  </main>
+
+  <footer class="pie">Demo · plaquita NFC + QR en la mesa</footer>
+
+  <script src="config.js?v=20260930"></script>
+  <script src="datos.js?v=20260930"></script>
+  <script>
+    document.documentElement.style.setProperty("--marca", LOCAL.colorPrincipal);
+    const $ = (id) => document.getElementById(id);
+    document.title = `¿Cómo estuvo? · ${LOCAL.nombre}`;
+    $("r-emoji").textContent = LOCAL.emoji;
+    $("r-nombre").textContent = LOCAL.nombre;
+    // Local real: link directo a "escribir reseña" con su Place ID de Google.
+    $("r-google").href = `https://www.google.com/maps/search/${encodeURIComponent(LOCAL.nombre + " " + LOCAL.direccion)}`;
+
+    let datos = cargar();
+    // Cuenta cada vez que alguien abre la página (una por sesión)
+    try {
+      if (!sessionStorage.getItem("visita-" + CLAVE)) {
+        datos.resenas.visitas++; guardar(datos); sessionStorage.setItem("visita-" + CLAVE, "1");
+      }
+    } catch (e) { /* ignorar */ }
+
+    $("r-google").onclick = () => { datos = cargar(); datos.resenas.google++; guardar(datos); };
+    $("r-privado").onclick = () => { $("opciones").classList.add("oculto"); $("r-form").classList.remove("oculto"); $("r-texto").focus(); };
+    $("r-form").onsubmit = (e) => {
+      e.preventDefault();
+      datos = cargar();
+      datos.resenas.privados.push({ texto: $("r-texto").value.trim(), contacto: $("r-contacto").value.trim(), hora: new Date().toLocaleString("es-AR") });
+      guardar(datos);
+      $("r-form").classList.add("oculto");
+      $("r-gracias").classList.remove("oculto");
+    };
+  </script>
+</body>
+</html>

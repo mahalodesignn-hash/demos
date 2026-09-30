@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carta</title>
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260930">
+  <link rel="stylesheet" href="gastronomia.css?v=20260930">
+  <!-- Visor 3D con realidad aumentada de Google: funciona en el navegador de Android y iPhone -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+</head>
+<body class="con-barra">
+  <header class="encabezado">
+    <div class="contenedor angosto">
+      <h1 id="local-nombre"></h1>
+      <p id="local-lema"></p>
+      <span class="mesa-badge" id="mesa-badge"></span>
+    </div>
+  </header>
+
+  <main class="contenedor angosto">
+    <nav class="cats" id="cats"></nav>
+    <section id="mis-pedidos" class="oculto"></section>
+    <div id="carta"></div>
+    <p class="vacio" style="text-align:center;margin-top:18px">🧊 = podés ver el plato en tu mesa con la cámara</p>
+  </main>
+
+  <div class="barra-mesa">
+    <div class="dentro">
+      <button class="boton secundario" id="btn-mozo">🛎️ Mozo</button>
+      <button class="boton secundario" id="btn-cuenta">🧾 Cuenta</button>
+      <button class="boton" id="btn-pedido">🛒 Ver pedido</button>
+    </div>
+  </div>
+
+  <div class="hoja-fondo oculto" id="hoja-fondo"><div class="hoja" id="hoja"></div></div>
+
+  <footer class="pie">Demo · <a id="link-panel">Ver el panel del mozo</a></footer>
+
+  <script src="config.js?v=20260930"></script>
+  <script src="datos.js?v=20260930"></script>
+  <script src="carta.js?v=20260930"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gastronomía</title>
+  <link rel="stylesheet" href="../comun/estilos.css?v=20260930">
+  <link rel="stylesheet" href="gastronomia.css?v=20260930">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor angosto">
+      <h1>Gastronomía</h1>
+      <p>Cafeterías, cervecerías y bodegones: carta QR con pedidos, llamar al mozo, reseñas con NFC y platos en realidad aumentada.</p>
+    </div>
+  </header>
+
+  <main class="contenedor angosto" id="locales"></main>
+
+  <div class="contenedor angosto">
+    <section class="tarjeta">
+      <h2>🧊 Cómo probar la realidad aumentada</h2>
+      <ol style="padding-left:18px;margin:0">
+        <li>Escaneá con el celular el QR de la carta de cualquier local.</li>
+        <li>Buscá un plato con <strong>🧊 Ver en 3D</strong> (café, palta, cerveza, hamburguesa, milanesa).</li>
+        <li>Tocá <strong>📱 Ver en mi mesa</strong>, apuntá a una mesa y el plato aparece en tamaño real.</li>
+      </ol>
+      <p class="vacio" style="font-size:.85rem;margin-bottom:0">Funciona en Android con "Servicios de Google Play para RA" y en iPhone con Safari. En la computadora se puede girar el plato, pero no ponerlo en la mesa.</p>
+    </section>
+    <section class="tarjeta">
+      <h2>💡 Para probar pedidos y mozo</h2>
+      <p style="margin:0">Abrí la <strong>carta</strong> y el <strong>panel</strong> en dos pestañas del <strong>mismo navegador</strong>: lo que pedís en la carta aparece al instante en el panel. <span class="vacio">(En la versión real funciona entre el celular del cliente y la tablet del local.)</span></p>
+    </section>
+  </div>
+  <footer class="pie">Soluciones para vos · demo</footer>
+
+  <script src="config.js?v=20260930"></script>
+  <script>
+    const base = new URL(".", location.href).href;
+    document.getElementById("locales").innerHTML = Object.entries(LOCALES).map(([id, l]) => `
+      <section class="tarjeta" style="border-top:5px solid ${l.colorPrincipal}">
+        <div class="barra" style="margin:0 0 8px;align-items:flex-start">
+          <div><h2 style="margin:0">${l.emoji} ${l.nombre}</h2><p class="vacio" style="margin:2px 0 0">${l.tipo} · ${l.lema}</p></div>
+          <div id="qr-${id}" title="Escaneá para abrir la carta en el celular" style="width:92px;flex:none"></div>
+        </div>
+        <div class="acciones">
+          <a class="boton" style="background:${l.colorPrincipal}" href="carta.html?local=${id}&mesa=5">Carta (mesa 5)</a>
+          <a class="boton secundario" href="panel.html?local=${id}">Panel mozo / cocina</a>
+          <a class="boton secundario" href="resena.html?local=${id}">Reseñas NFC</a>
+        </div>
+      </section>`).join("");
+    if (window.qrcode) Object.keys(LOCALES).forEach((id) => {
+      const qr = qrcode(0, "M");
+      qr.addData(`${base}carta.html?local=${id}&mesa=5`);
+      qr.make();
+      document.getElementById("qr-" + id).innerHTML = qr.createSvgTag({ cellSize: 3, margin: 0, scalable: true });
+    });
+  </script>
+</body>
+</html>
