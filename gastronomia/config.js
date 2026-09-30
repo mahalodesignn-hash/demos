@@ -19,14 +19,14 @@ const LOCALES = {
         { id: "latte-vainilla", foto: "fotos/latte-vainilla.jpg", nombre: "Latte de vainilla", desc: "Con almíbar de vainilla casero", precio: 4200, emoji: "🍦" },
       ] },
       { nombre: "Para comer", items: [
-        { id: "medialunas", foto: "fotos/medialunas.jpg", nombre: "Medialunas x2", desc: "De manteca, recién horneadas", precio: 2400, emoji: "🥐", modelo: "modelos/medialuna.glb", escaneado: true },
-        { id: "palta", foto: "fotos/palta.jpg", nombre: "Tostada con palta", desc: "Pan de masa madre, palta, huevo poché y semillas", precio: 7900, emoji: "🥑", etiquetas: ["veggie"], modelo: "modelos/palta.glb", escala: 1.6 },
+        { id: "medialunas", foto: "fotos/medialunas.jpg", nombre: "Medialunas x2", desc: "De manteca, recién horneadas", precio: 2400, emoji: "🥐", modelo: "modelos/medialuna.glb?v=2", escaneado: true },
+        { id: "palta", foto: "fotos/palta.jpg", nombre: "Tostada con palta", desc: "Pan de masa madre, palta, huevo poché y semillas", precio: 7900, emoji: "🥑", etiquetas: ["veggie"], modelo: "modelos/palta.glb?v=2" },
         { id: "tostado", foto: "fotos/tostado.jpg", nombre: "Tostado de jamón y queso", desc: "En pan de miga", precio: 5600, emoji: "🥪" },
-        { id: "budin", nombre: "Budín de limón", desc: "Porción, con glaseado", precio: 3000, emoji: "🍋", etiquetas: ["sin TACC"] },
+        { id: "budin", foto: "fotos/budin.jpg", nombre: "Budín de limón", desc: "Porción, con glaseado", precio: 3000, emoji: "🍋", etiquetas: ["sin TACC"] },
       ] },
       { nombre: "Tortas", items: [
-        { id: "torta-zanahoria", nombre: "Torta de zanahoria", desc: "Con frosting de queso crema y nueces · entera o por porción", precio: 5200, emoji: "🥕", modelo: "modelos/torta-zanahoria.glb", escaneado: true },
-        { id: "torta-frutilla", nombre: "Torta de frutilla y chocolate", desc: "Bizcochuelo de chocolate, crema y frutillas frescas", precio: 5800, emoji: "🍓", modelo: "modelos/torta-frutilla-chocolate.glb", escaneado: true },
+        { id: "torta-zanahoria", nombre: "Torta de zanahoria", desc: "Con frosting de queso crema y nueces · entera o por porción", precio: 5200, emoji: "🥕", modelo: "modelos/torta-zanahoria.glb?v=2", escaneado: true },
+        { id: "torta-frutilla", nombre: "Torta de frutilla y chocolate", desc: "Bizcochuelo de chocolate, crema y frutillas frescas", precio: 5800, emoji: "🍓", modelo: "modelos/torta-frutilla-chocolate.glb?v=2", escaneado: true },
       ] },
       { nombre: "Frescos", items: [
         { id: "limonada", foto: "fotos/limonada.jpg", nombre: "Limonada con menta y jengibre", desc: "Jarra 500 ml", precio: 4500, emoji: "🍹" },
@@ -48,7 +48,7 @@ const LOCALES = {
       { nombre: "Cervezas (pinta)", items: [
         { id: "ipa", foto: "fotos/ipa.jpg", nombre: "IPA", desc: "Amarga y cítrica · 6,5% · 60 IBU", precio: 5200, emoji: "🍺", modelo: "modelos/cerveza.glb" },
         { id: "honey", foto: "fotos/honey.jpg", nombre: "Honey", desc: "Suave, con miel · 5,5%", precio: 4800, emoji: "🍯" },
-        { id: "scottish", nombre: "Scottish", desc: "Roja, maltosa · 6%", precio: 4800, emoji: "🍺" },
+        { id: "scottish", foto: "fotos/scottish.jpg", nombre: "Scottish", desc: "Roja, maltosa · 6%", precio: 4800, emoji: "🍺" },
         { id: "stout", foto: "fotos/stout.jpg", nombre: "Stout", desc: "Negra, notas a café · 5,8%", precio: 5000, emoji: "⚫" },
       ] },
       { nombre: "Para picar", items: [
@@ -58,8 +58,8 @@ const LOCALES = {
         { id: "picada", foto: "fotos/picada.jpg", nombre: "Picada para 2", desc: "Fiambres, quesos, aceitunas y pan", precio: 14800, emoji: "🧀" },
       ] },
       { nombre: "Sin alcohol", items: [
-        { id: "gaseosa", nombre: "Gaseosa", desc: "500 ml", precio: 2800, emoji: "🥤" },
-        { id: "agua", nombre: "Agua saborizada", desc: "500 ml", precio: 2500, emoji: "💧" },
+        { id: "gaseosa", foto: "fotos/gaseosa.jpg", nombre: "Gaseosa", desc: "500 ml", precio: 2800, emoji: "🥤" },
+        { id: "agua", foto: "fotos/agua.jpg", nombre: "Agua saborizada", desc: "500 ml", precio: 2500, emoji: "💧" },
       ] },
     ],
   },
@@ -81,7 +81,7 @@ const LOCALES = {
         { id: "bife", foto: "fotos/bife.jpg", nombre: "Bife de chorizo", desc: "400 g, con ensalada o papas", precio: 18500, emoji: "🥩", etiquetas: ["sin TACC"] },
       ] },
       { nombre: "Postres", items: [
-        { id: "flan", nombre: "Flan casero", desc: "Con dulce de leche o crema", precio: 4500, emoji: "🍮", etiquetas: ["sin TACC"] },
+        { id: "flan", foto: "fotos/flan.jpg", nombre: "Flan casero", desc: "Con dulce de leche o crema", precio: 4500, emoji: "🍮", etiquetas: ["sin TACC"] },
         { id: "vigilante", nombre: "Queso y dulce", desc: "El clásico", precio: 4200, emoji: "🧀" },
       ] },
       { nombre: "Bebidas", items: [
