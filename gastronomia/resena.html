@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>¿Cómo estuvo?</title>
-  <link rel="stylesheet" href="../comun/estilos.css?v=20260930c">
-  <link rel="stylesheet" href="gastronomia.css?v=20260930c">
+  <link rel="stylesheet" href="../comun/estilos.css?v=20261001b">
+  <link rel="stylesheet" href="gastronomia.css?v=20261001b">
 </head>
 <body>
   <!-- Página que abre la plaquita NFC (o el QR) de la mesa. Muestra las dos opciones a todos:
@@ -42,8 +42,8 @@
 
   <footer class="pie">Demo · plaquita NFC + QR en la mesa</footer>
 
-  <script src="config.js?v=20260930c"></script>
-  <script src="datos.js?v=20260930c"></script>
+  <script src="config.js?v=20261001b"></script>
+  <script src="datos.js?v=20261001b"></script>
   <script>
     document.documentElement.style.setProperty("--marca", LOCAL.colorPrincipal);
     const $ = (id) => document.getElementById(id);
@@ -56,7 +56,7 @@
     let datos = cargar();
     // Cuenta cada vez que alguien abre la página (una por sesión)
     try {
-      if (!sessionStorage.getItem("visita-" + CLAVE)) {
+      if (!sessionStorage.getItem("visita-" + CLAVE) && !location.search.includes("desde=tarjeta")) {
         datos.resenas.visitas++; guardar(datos); sessionStorage.setItem("visita-" + CLAVE, "1");
       }
     } catch (e) { /* ignorar */ }

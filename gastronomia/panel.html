@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Panel del local</title>
-  <link rel="stylesheet" href="../comun/estilos.css?v=20260930c">
-  <link rel="stylesheet" href="gastronomia.css?v=20260930c">
+  <link rel="stylesheet" href="../comun/estilos.css?v=20261001b">
+  <link rel="stylesheet" href="gastronomia.css?v=20261001b">
 </head>
 <body>
   <header class="encabezado">
@@ -25,6 +25,7 @@
         <button class="pestana activa" data-vista="pedidos">🍳 Pedidos</button>
         <button class="pestana" data-vista="mesas">🪑 Mesas</button>
         <button class="pestana" data-vista="resenas">⭐ Reseñas</button>
+        <button class="pestana" data-vista="clientes" id="tab-clientes">🎁 Clientes</button>
       </div>
       <div class="acciones">
         <button class="boton secundario chico" id="btn-sonido">🔔 Activar sonido</button>
@@ -54,12 +55,38 @@
         <div id="privados"></div>
       </div>
     </section>
+
+    <section class="oculto" id="vista-clientes">
+      <div class="tarjeta">
+        <h2>🎁 Tarjeta de sellos virtual</h2>
+        <p class="vacio" style="margin-top:0">El cliente toca la plaquita, se anota con su WhatsApp y suma un sello en cada consumición. Vos lo confirmás desde acá.</p>
+        <div class="metricas" id="metricas-clientes"></div>
+        <a class="boton secundario chico" id="link-tarjeta" target="_blank">Ver la tarjeta del cliente</a>
+      </div>
+      <div class="tarjeta">
+        <h2>🎫 Sellos por confirmar</h2>
+        <div id="solicitudes"></div>
+      </div>
+      <div class="tarjeta">
+        <h2>📣 Mensajes por WhatsApp</h2>
+        <p class="vacio" style="margin-top:0">Elegí a quiénes avisar y editá el texto. Solo se escribe a quienes aceptaron recibir mensajes. En la demo se abre WhatsApp y tocás "enviar"; en la versión real salen solos y programados.</p>
+        <label for="campana">Qué querés mandar</label>
+        <select id="campana"></select>
+        <label for="mensaje">Mensaje (podés usar {nombre})</label>
+        <textarea id="mensaje" rows="3" style="width:100%;padding:10px;border:1px solid var(--borde);border-radius:10px;font:inherit"></textarea>
+        <div id="destinatarios" style="margin-top:8px"></div>
+      </div>
+      <div class="tarjeta">
+        <h2>👥 Clientes</h2>
+        <div id="clientes"></div>
+      </div>
+    </section>
   </main>
 
   <footer class="pie">Demo · los datos se guardan solo en este navegador · <a id="link-carta" target="_blank">Abrir la carta de la mesa 5</a></footer>
 
-  <script src="config.js?v=20260930c"></script>
-  <script src="datos.js?v=20260930c"></script>
-  <script src="panel.js?v=20260930c"></script>
+  <script src="config.js?v=20261001b"></script>
+  <script src="datos.js?v=20261001b"></script>
+  <script src="panel.js?v=20261001b"></script>
 </body>
 </html>

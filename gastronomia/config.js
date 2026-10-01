@@ -10,6 +10,8 @@ const LOCALES = {
     direccion: "Pellegrini 1450, Rosario",
     whatsapp: "5493410000000",
     mesas: 10,
+    // Tarjeta de sellos virtual (solo cafeterías por ahora): meta = consumiciones para el premio
+    fidelidad: { meta: 10, premio: "un café gratis", promo: "2x1 en medialunas de 16 a 18 hs", regaloCumple: "un café de regalo" },
     moneda: "$",
     categorias: [
       { nombre: "Cafés", items: [

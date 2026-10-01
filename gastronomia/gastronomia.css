@@ -16,7 +16,7 @@
 .plato p { margin: 2px 0 6px; color: var(--texto-suave); font-size: .88rem; }
 .plato .pie-plato { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 .plato .precio { font-weight: 800; }
-.etiqueta { display: inline-block; font-size: .72rem; border-radius: 999px; padding: 1px 8px; background: #ecfdf5; color: #047857; margin-right: 4px; }
+.plato .etiqueta { display: inline-block; font-size: .72rem; border-radius: 999px; padding: 1px 8px; background: #ecfdf5; color: #047857; margin-right: 4px; }
 .btn-ar { background: #111827; color: white; border: 0; border-radius: 999px; padding: 6px 12px; font-size: .8rem; font-weight: 600; cursor: pointer; }
 
 /* Barra inferior fija */
@@ -57,6 +57,22 @@ model-viewer { width: 100%; height: 340px; background: radial-gradient(circle at
 .mesa small { display: block; font-weight: 500; font-size: .7rem; color: var(--texto-suave); }
 .mesa.ocupada { background: #fff7ed; border-color: #fdba74; }
 .mesa.llama { background: #fef2f2; border-color: #f87171; }
+
+/* ---------- Tarjeta de sellos ---------- */
+.sellos { display: grid; grid-template-columns: repeat(var(--cols, 5), 1fr); gap: 8px; margin: 12px 0; }
+.sello { aspect-ratio: 1; border-radius: 50%; border: 2px dashed var(--borde); display: grid; place-items: center; color: var(--texto-suave); font-weight: 700; font-size: .9rem; }
+.sello.lleno { background: var(--marca); border: 2px solid var(--marca); font-size: 1.4rem; }
+.sello.premio { border-color: var(--marca); font-size: 1.4rem; }
+.sello-texto { margin: 0 0 12px; text-align: center; }
+label.check { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0; color: var(--texto); font-size: .85rem; }
+label.check input { width: auto; margin-top: 3px; }
+.boton:disabled { opacity: .55; cursor: not-allowed; }
+a.boton { text-decoration: none; text-align: center; display: inline-block; }
+
+/* Clientes en el panel */
+.fila-cliente { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--borde); }
+.fila-cliente small { display: block; color: var(--texto-suave); }
+.insignia { display: inline-block; font-size: .72rem; border-radius: 999px; padding: 1px 8px; background: #fef3c7; color: #92400e; margin-left: 4px; }
 
 /* ---------- Reseñas ---------- */
 .gran-opcion { display: block; text-align: center; text-decoration: none; border-radius: 14px; padding: 18px; margin-bottom: 12px; font-weight: 700; font-size: 1.05rem; cursor: pointer; border: 0; width: 100%; }

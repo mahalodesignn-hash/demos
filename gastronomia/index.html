@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gastronomía</title>
-  <link rel="stylesheet" href="../comun/estilos.css?v=20260930c">
-  <link rel="stylesheet" href="gastronomia.css?v=20260930c">
+  <link rel="stylesheet" href="../comun/estilos.css?v=20261001b">
+  <link rel="stylesheet" href="gastronomia.css?v=20261001b">
   <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 </head>
 <body>
@@ -35,7 +35,7 @@
   </div>
   <footer class="pie">Soluciones para vos · demo</footer>
 
-  <script src="config.js?v=20260930c"></script>
+  <script src="config.js?v=20261001b"></script>
   <script>
     const base = new URL(".", location.href).href;
     document.getElementById("locales").innerHTML = Object.entries(LOCALES).map(([id, l]) => `
@@ -47,7 +47,8 @@
         <div class="acciones">
           <a class="boton" style="background:${l.colorPrincipal}" href="carta.html?local=${id}&mesa=5">Carta (mesa 5)</a>
           <a class="boton secundario" href="panel.html?local=${id}">Panel mozo / cocina</a>
-          <a class="boton secundario" href="resena.html?local=${id}">Reseñas NFC</a>
+          ${l.fidelidad ? `<a class="boton secundario" href="tarjeta.html?local=${id}">🎁 Tarjeta de sellos (NFC)</a>` : ""}
+          <a class="boton secundario" href="resena.html?local=${id}">Reseñas</a>
         </div>
       </section>`).join("");
     if (window.qrcode) Object.keys(LOCALES).forEach((id) => {

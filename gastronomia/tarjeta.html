@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi tarjeta de sellos</title>
+  <link rel="stylesheet" href="../comun/estilos.css?v=20261001b">
+  <link rel="stylesheet" href="gastronomia.css?v=20261001b">
+</head>
+<body>
+  <!-- Página que abre la plaquita NFC (o el QR) de la mesa: tarjeta de sellos virtual del cliente.
+       La reseña de Google va aparte y NO es condición para sumar sellos (Google prohíbe incentivar reseñas). -->
+  <header class="encabezado portada">
+    <div style="font-size:3rem" id="t-emoji"></div>
+    <h1 id="t-nombre"></h1>
+    <div class="sub" id="t-sub"></div>
+  </header>
+
+  <main class="contenedor angosto" style="margin-top:16px">
+    <!-- Alta (primera vez) -->
+    <section class="tarjeta oculto" id="t-alta">
+      <h2>🎁 Sumate a la tarjeta de sellos</h2>
+      <p style="margin-top:0" id="t-alta-texto"></p>
+      <form id="t-form">
+        <label for="t-nom">Tu nombre</label>
+        <input id="t-nom" required autocomplete="given-name">
+        <label for="t-wsp">Tu WhatsApp</label>
+        <input id="t-wsp" type="tel" inputmode="tel" placeholder="341 555 0000" required autocomplete="tel">
+        <label>Tu cumpleaños (opcional, solo día y mes)</label>
+        <div style="display:grid;grid-template-columns:1fr 2fr;gap:8px">
+          <select id="t-dia" aria-label="Día"><option value="">Día</option></select>
+          <select id="t-mes" aria-label="Mes"><option value="">Mes</option></select>
+        </div>
+        <label class="check"><input type="checkbox" id="t-acepta">
+          <span>Quiero recibir por WhatsApp promos y saludos de <strong id="t-nombre2"></strong>. Me puedo dar de baja cuando quiera.</span></label>
+        <button class="boton ancho" type="submit">Crear mi tarjeta</button>
+      </form>
+      <p class="vacio" style="font-size:.85rem;margin-bottom:0"><a href="#" id="t-ya">Ya tengo tarjeta: entrar con mi WhatsApp</a></p>
+    </section>
+
+    <!-- Tarjeta -->
+    <section class="tarjeta oculto" id="t-tarjeta">
+      <div class="barra" style="margin:0 0 6px">
+        <h2 style="margin:0" id="t-hola"></h2>
+        <small class="vacio" id="t-cuenta"></small>
+      </div>
+      <div class="sellos" id="t-sellos"></div>
+      <p class="sello-texto" id="t-texto"></p>
+      <button class="boton ancho" id="t-pedir"></button>
+      <p class="vacio" style="font-size:.82rem;margin-bottom:0" id="t-aviso"></p>
+    </section>
+
+    <!-- Reseña: aparte, sin condiciones -->
+    <section class="tarjeta oculto" id="t-resena">
+      <h2>¿Cómo estuvo?</h2>
+      <p style="margin-top:0">Si querés, contanos cómo te fue. Tu sello no depende de esto.</p>
+      <a class="boton secundario ancho" id="t-link-resena">⭐ Dejar una reseña o contarle algo al dueño</a>
+    </section>
+  </main>
+
+  <footer class="pie">Demo · plaquita NFC + QR en la mesa · <a id="t-link-panel">Ver el panel del local</a></footer>
+
+  <script src="config.js?v=20261001b"></script>
+  <script src="datos.js?v=20261001b"></script>
+  <script src="tarjeta.js?v=20261001b"></script>
+</body>
+</html>
