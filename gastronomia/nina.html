@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nina · demo para cafeterías</title>
+  <link rel="stylesheet" href="../comun/estilos.css?v=20261002a">
+  <link rel="stylesheet" href="gastronomia.css?v=20261002a">
+</head>
+<body>
+  <header class="encabezado portada">
+    <div style="font-size:3rem">☕</div>
+    <h1>Nina</h1>
+    <div class="sub">Demo: carta QR, tarjeta de sellos y panel del local</div>
+  </header>
+
+  <main class="contenedor angosto" style="margin-top:16px">
+    <section class="tarjeta">
+      <h2>Probala en 3 pasos</h2>
+      <ol style="padding-left:18px;margin:0">
+        <li><strong>Tarjeta de sellos:</strong> anotate con tu nombre y WhatsApp (poné datos de prueba) y tocá "Sumar mi sello".</li>
+        <li><strong>Panel del local:</strong> pestaña <em>🎁 Clientes</em>. Ahí le llega el pedido de sello al mozo y lo confirma.</li>
+        <li><strong>Mensajes:</strong> en el mismo panel elegí una promo o un saludo de cumpleaños y mandalo por WhatsApp.</li>
+      </ol>
+      <p class="vacio" style="font-size:.85rem;margin-bottom:0">Es una demo: los datos se guardan solo en este celular o navegador. Probá la tarjeta y el panel en el mismo dispositivo.</p>
+    </section>
+
+    <a class="gran-opcion google" href="tarjeta.html?local=nina">🎁 Tarjeta de sellos
+      <small>Lo que ve el cliente al apoyar el celular en la plaquita</small></a>
+    <a class="gran-opcion privado" href="panel.html?local=nina">🧾 Panel del local
+      <small>Pedidos, mozo, clientes y mensajes</small></a>
+    <a class="gran-opcion privado" href="carta.html?local=nina&mesa=5">📋 Carta QR de la mesa 5
+      <small>Pedido desde el celular, llamar al mozo y platos en 3D</small></a>
+  </main>
+
+  <footer class="pie">Soluciones para vos · demo</footer>
+
+  <script src="config.js?v=20261002a"></script>
+  <script>
+    document.documentElement.style.setProperty("--marca", LOCALES.nina.colorPrincipal);
+  </script>
+</body>
+</html>

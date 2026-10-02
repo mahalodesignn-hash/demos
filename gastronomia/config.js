@@ -95,6 +95,17 @@ const LOCALES = {
   },
 };
 
+// Nina (cafetería de especialidad): usa la carta de ejemplo del café con su nombre.
+// "oculto" la saca de la lista de demos; se entra por nina.html o ?local=nina.
+LOCALES.nina = {
+  ...LOCALES.cafe,
+  oculto: true,
+  nombre: "Nina",
+  lema: "Café de especialidad, pastelería y buen momento",
+  direccion: "Rosario",
+  colorPrincipal: "#3d5a47",
+};
+
 const CLAVE_LOCAL = new URLSearchParams(location.search).get("local");
 const LOCAL = LOCALES[CLAVE_LOCAL] || LOCALES.cafe;
 const ID_LOCAL = LOCALES[CLAVE_LOCAL] ? CLAVE_LOCAL : "cafe";
