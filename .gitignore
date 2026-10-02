@@ -6,3 +6,4 @@ __pycache__/
 negocio/
 borradores/
 skills-lock.json
+.agents/

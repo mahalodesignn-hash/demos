@@ -1,0 +1,213 @@
+/* Nina: cafetería de especialidad.
+   Dirección: papel frío y tinta azul-negra, un solo color de marca (ultramar) que funciona como
+   el sello de goma de la tarjeta. Una sola familia tipográfica (Bricolage Grotesque): condensada y
+   pesada para títulos, normal para texto. Sin sombras: las cosas se separan con líneas y aire.
+   Todo va bajo .tema-nina, así que los otros locales no cambian. */
+
+html.tema-nina {
+  --marca: #2b3aa8;
+  --marca-suave: #e8eaf7;
+  --fondo: #f2f3f0;
+  --tarjeta: #fbfbf9;
+  --texto: #161a2b;
+  --texto-suave: #5d6174;
+  --borde: #d9dbd6;
+  --yema: #f4c542;
+  --yema-suave: #fbf0c8;
+  --sombra: none;
+  --radio: 18px;
+
+  --i-campana: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9'/%3E%3Cpath d='M10.3 21a1.94 1.94 0 0 0 3.4 0'/%3E%3C/svg%3E");
+  --i-cuenta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z'/%3E%3Cpath d='M8 8h8M8 12h8M8 16h5'/%3E%3C/svg%3E");
+  --i-bolsa: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z'/%3E%3Cpath d='M3 6h18'/%3E%3Cpath d='M16 10a4 4 0 0 1-8 0'/%3E%3C/svg%3E");
+  --i-cubo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 8 12 3 3 8v8l9 5 9-5Z'/%3E%3Cpath d='m3 8 9 5 9-5M12 13v8'/%3E%3C/svg%3E");
+  --i-regalo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='8' width='18' height='4' rx='1'/%3E%3Cpath d='M12 8v13M19 12v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8'/%3E%3Cpath d='M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5'/%3E%3C/svg%3E");
+  --i-panel: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='3'/%3E%3Cpath d='M3 9h18M9 21V9'/%3E%3C/svg%3E");
+  --i-carta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 2v2M14 2v2M6 2v2'/%3E%3Cpath d='M18 8h1a3 3 0 0 1 0 6h-1'/%3E%3Cpath d='M3 8h15v7a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5Z'/%3E%3C/svg%3E");
+  --i-flecha: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6 6 6-6 6'/%3E%3C/svg%3E");
+}
+
+/* ---------- Base ---------- */
+.tema-nina body {
+  font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-optical-sizing: auto;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.5;
+}
+.tema-nina :focus-visible { outline: 2px solid var(--marca); outline-offset: 2px; }
+.tema-nina ::selection { background: var(--yema); color: var(--texto); }
+
+/* Íconos de línea: máscara SVG que toma el color del texto */
+.tema-nina .ico::before,
+.tema-nina #btn-mozo::before, .tema-nina #btn-cuenta::before, .tema-nina #btn-pedido::before,
+.tema-nina .btn-ar::before, .tema-nina .fila-link::before, .tema-nina .fila-link::after {
+  content: ""; flex: none; width: 1.15em; height: 1.15em;
+  background: currentColor;
+  -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat;
+}
+.tema-nina #btn-mozo { --ico: var(--i-campana); }
+.tema-nina #btn-cuenta { --ico: var(--i-cuenta); }
+.tema-nina #btn-pedido { --ico: var(--i-bolsa); }
+.tema-nina .btn-ar { --ico: var(--i-cubo); }
+
+/* ---------- Encabezado: el nombre como marca, sin bloque de color ---------- */
+.tema-nina .encabezado { background: transparent; color: var(--texto); padding: 30px 16px 10px; }
+.tema-nina .encabezado .contenedor { padding-left: 0; padding-right: 0; }
+.tema-nina .encabezado h1 {
+  margin: 0; color: var(--marca); text-transform: lowercase;
+  font-size: clamp(3rem, 15vw, 4.4rem); font-weight: 800; line-height: .85;
+  letter-spacing: -.035em; font-variation-settings: "wdth" 75;
+}
+.tema-nina .encabezado p, .tema-nina .portada .sub { margin: 10px 0 0; opacity: 1; color: var(--texto-suave); font-size: 1rem; }
+.tema-nina .portada { text-align: left; max-width: 560px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+.tema-nina .mesa-badge { background: none; border: 1.5px solid var(--texto); color: var(--texto); font-weight: 600; padding: 2px 12px; margin-top: 14px; }
+
+/* ---------- Superficies, botones y formularios ---------- */
+.tema-nina .tarjeta { background: var(--tarjeta); border: 1px solid var(--borde); box-shadow: none; border-radius: var(--radio); padding: 22px; }
+.tema-nina .tarjeta h2, .tema-nina .hoja h3 { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; font-variation-settings: "wdth" 82; line-height: 1.1; }
+
+.tema-nina .boton {
+  border-radius: 999px; padding: 12px 22px; font-weight: 600; letter-spacing: -.005em;
+  background: var(--marca); color: #fff; border: 1.5px solid var(--marca);
+  transition: background-color .15s, color .15s, border-color .15s;
+}
+.tema-nina .boton:hover { filter: none; background: var(--texto); border-color: var(--texto); }
+.tema-nina .boton.secundario { background: transparent; color: var(--texto); border-color: var(--texto); }
+.tema-nina .boton.secundario:hover { background: var(--texto); color: #fff; }
+.tema-nina .boton.chico { padding: 7px 14px; font-size: .88rem; font-weight: 600; }
+.tema-nina .boton:disabled { background: var(--borde); border-color: var(--borde); color: var(--texto-suave); opacity: 1; }
+.tema-nina .boton.ancho { margin-top: 18px; padding: 15px 22px; }
+
+.tema-nina label { color: var(--texto-suave); font-size: .88rem; font-weight: 500; }
+.tema-nina input, .tema-nina select, .tema-nina textarea {
+  background: #fff; border: 1.5px solid var(--borde); border-radius: 12px; color: var(--texto); padding: 12px 14px;
+}
+.tema-nina input:focus, .tema-nina select:focus, .tema-nina textarea:focus { outline: 0; border-color: var(--marca); box-shadow: 0 0 0 3px var(--marca-suave); }
+.tema-nina label.check { color: var(--texto); }
+.tema-nina .vacio { color: var(--texto-suave); }
+.tema-nina .aviso { background: var(--marca-suave); border-radius: 12px; }
+.tema-nina .pie, .tema-nina .pie a { color: var(--texto-suave); }
+
+/* ---------- Tarjeta de sellos: lo memorable. Cada sello es una huella de goma ---------- */
+.tema-nina .sellos { gap: 10px; margin: 18px 0 14px; }
+.tema-nina .sello {
+  border: 1.5px dashed #b9bcc8; color: var(--texto-suave); background: transparent;
+  font-weight: 500; font-size: .95rem; font-variant-numeric: tabular-nums; font-variation-settings: "wdth" 82;
+}
+.tema-nina .sello.lleno {
+  --r: -4deg;
+  border: 2.5px solid var(--marca); color: var(--marca); background: transparent;
+  outline: 1.5px solid var(--marca); outline-offset: -8px;
+  transform: rotate(var(--r)); mix-blend-mode: multiply;
+}
+.tema-nina .sello.lleno:nth-child(3n+2) { --r: 5deg; }
+.tema-nina .sello.lleno:nth-child(3n) { --r: -9deg; }
+.tema-nina .sello.lleno:nth-child(4n+1) { --r: 3deg; }
+.tema-nina .sello svg { width: 46%; height: 46%; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tema-nina .sello.premio { border: 2px solid var(--texto); background: var(--yema); color: var(--texto); }
+.tema-nina .sello.nuevo { animation: sellar .42s cubic-bezier(.2, .9, .3, 1.2); }
+@keyframes sellar { 0% { transform: rotate(var(--r)) scale(1.9); opacity: 0; } 70% { opacity: 1; } 100% { transform: rotate(var(--r)) scale(1); } }
+.tema-nina .sello-texto { font-size: 1.05rem; text-align: left; margin: 0 0 4px; }
+.tema-nina .sello-texto strong { font-weight: 700; }
+
+/* ---------- Carta: una lista impresa, no una pila de tarjetas ---------- */
+.tema-nina .cats { background: var(--fondo); border-bottom: 1px solid var(--borde); padding: 10px 0 0; gap: 22px; }
+.tema-nina .cat { border: 0; border-bottom: 2.5px solid transparent; border-radius: 0; background: none; padding: 6px 0 9px; font-weight: 600; color: var(--texto-suave); }
+.tema-nina .cat.activa { background: none; color: var(--texto); border-color: var(--marca); }
+.tema-nina .cat-titulo {
+  font-size: 2rem; font-weight: 800; letter-spacing: -.03em; line-height: 1;
+  font-variation-settings: "wdth" 75; margin: 34px 0 4px; scroll-margin-top: 64px;
+}
+.tema-nina .plato {
+  grid-template-columns: 84px 1fr; gap: 16px; background: none; border: 0; border-bottom: 1px solid var(--borde);
+  border-radius: 0; box-shadow: none; padding: 18px 0; margin: 0;
+}
+.tema-nina .plato .foto { width: 84px; height: 84px; border-radius: 12px; background-color: var(--marca-suave); font-size: 2rem; }
+.tema-nina .plato h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -.015em; line-height: 1.2; }
+.tema-nina .plato p { color: var(--texto-suave); font-size: .92rem; margin: 3px 0 8px; }
+.tema-nina .plato .precio { font-size: 1.05rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.tema-nina .plato .etiqueta { background: none; border: 1px solid var(--borde); color: var(--texto-suave); font-weight: 500; margin: 0 6px 6px 0; }
+.tema-nina .btn-ar { background: none; color: var(--marca); padding: 0; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border-radius: 0; }
+.tema-nina .btn-ar:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Barra inferior */
+.tema-nina .barra-mesa { background: rgba(242, 243, 240, .92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: none; border-top: 1px solid var(--borde); }
+.tema-nina .barra-mesa .boton { padding: 12px 16px; }
+
+/* Hojas (pedido, 3D, cuenta) */
+.tema-nina .hoja-fondo { background: rgba(22, 26, 43, .5); }
+.tema-nina .hoja { border-radius: 26px 26px 0 0; background: var(--tarjeta); padding: 24px 20px; }
+.tema-nina .linea-pedido { border-bottom: 1px solid var(--borde); }
+.tema-nina .cant button { border: 1.5px solid var(--texto); border-radius: 50%; }
+.tema-nina .paso-estado span { height: 4px; }
+.tema-nina .paso-estado span.hecho { background: var(--marca); }
+.tema-nina model-viewer { background: radial-gradient(circle at 50% 38%, #fff, #e3e5e0); border-radius: 16px; }
+.tema-nina .boton-ar-grande { background: var(--marca); border-radius: 999px; box-shadow: none; }
+.tema-nina #toast { background: var(--texto) !important; border-radius: 999px !important; font-weight: 500; }
+
+/* ---------- Páginas de la plaquita y de entrada ---------- */
+.tema-nina .gran-opcion { border-radius: var(--radio); text-align: left; padding: 20px 22px; letter-spacing: -.01em; font-weight: 700; }
+.tema-nina .gran-opcion.google { background: var(--marca); color: #fff; }
+.tema-nina .gran-opcion.privado { background: transparent; color: var(--texto); border: 1.5px solid var(--texto); }
+.tema-nina .gran-opcion small { opacity: .8; font-weight: 400; }
+
+.tema-nina .filas { border-top: 1.5px solid var(--texto); margin: 28px 0 8px; }
+.tema-nina .fila-link { display: flex; align-items: center; gap: 16px; padding: 20px 2px; border-bottom: 1px solid var(--borde); color: var(--texto); text-decoration: none; }
+.tema-nina .fila-link::before { width: 1.6em; height: 1.6em; color: var(--marca); }
+.tema-nina .fila-link::after { --ico: var(--i-flecha); margin-left: auto; color: var(--texto-suave); transition: transform .15s; }
+.tema-nina .fila-link:hover::after { transform: translateX(4px); color: var(--marca); }
+.tema-nina .fila-link strong { display: block; font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; font-variation-settings: "wdth" 82; line-height: 1.15; }
+.tema-nina .fila-link span { color: var(--texto-suave); font-size: .92rem; }
+.tema-nina .fila-link.f-tarjeta { --ico: var(--i-regalo); }
+.tema-nina .fila-link.f-panel { --ico: var(--i-panel); }
+.tema-nina .fila-link.f-carta { --ico: var(--i-carta); }
+
+/* ---------- Panel del local ---------- */
+.tema-nina .pestanas { background: none; border: 0; border-bottom: 1px solid var(--borde); border-radius: 0; padding: 0; gap: 24px; }
+.tema-nina .pestana { padding: 10px 0 11px; border-radius: 0; border-bottom: 2.5px solid transparent; font-weight: 600; background: none; }
+.tema-nina .pestana.activa { background: none; color: var(--texto); border-color: var(--marca); }
+
+.tema-nina .metricas { gap: 28px; }
+.tema-nina .metrica { background: none; border: 0; border-top: 2px solid var(--texto); border-radius: 0; box-shadow: none; padding: 10px 0 0; }
+.tema-nina .metrica .numero { font-size: 2.4rem; font-weight: 800; line-height: 1; letter-spacing: -.03em; font-variation-settings: "wdth" 75; font-variant-numeric: tabular-nums; }
+.tema-nina .metrica .etiqueta { background: none; color: var(--texto-suave); padding: 0; border-radius: 0; margin: 4px 0 0; font-size: .85rem; display: block; }
+.tema-nina .metrica.destacada { background: none; border-top-color: var(--marca); }
+.tema-nina .metrica.destacada .numero { color: var(--marca); }
+
+.tema-nina .alerta-llamada { background: var(--yema-suave); border: 1px solid #e6cd73; border-left: 5px solid var(--yema); border-radius: 12px; animation: nina-latido 2s infinite; }
+@keyframes nina-latido { 0%, 100% { box-shadow: 0 0 0 0 rgba(244, 197, 66, .55); } 50% { box-shadow: 0 0 0 7px rgba(244, 197, 66, 0); } }
+.tema-nina .columna { background: #e8eae5; border-radius: 16px; }
+.tema-nina .columna h3 { font-weight: 700; letter-spacing: -.01em; }
+.tema-nina .ticket { background: var(--tarjeta); border: 1px solid var(--borde); box-shadow: none; border-radius: 12px; }
+.tema-nina .mesa { background: var(--tarjeta); border-color: var(--borde); border-radius: 12px; font-variant-numeric: tabular-nums; }
+.tema-nina .mesa.ocupada { background: var(--marca-suave); border-color: var(--marca); }
+.tema-nina .mesa.llama { background: var(--yema); border-color: var(--texto); }
+.tema-nina .fila-cliente { border-bottom-color: var(--borde); }
+.tema-nina .insignia { background: var(--yema); color: var(--texto); font-weight: 600; }
+
+/* ---------- Celular angosto ---------- */
+@media (max-width: 560px) {
+  .tema-nina .metricas { gap: 14px; }
+  .tema-nina .metrica .numero { font-size: 1.8rem; }
+  .tema-nina .plato { grid-template-columns: 72px 1fr; }
+  .tema-nina .plato .foto { width: 72px; height: 72px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tema-nina .sello.nuevo, .tema-nina .alerta-llamada { animation: none; }
+  .tema-nina .fila-link::after { transition: none; }
+}
+
+.tema-nina a { color: var(--marca); text-underline-offset: 3px; }
+.tema-nina a.boton, .tema-nina a.cat, .tema-nina a.fila-link, .tema-nina a.gran-opcion { text-decoration: none; }
+.tema-nina a.boton { color: #fff; }
+.tema-nina a.boton.secundario { color: var(--texto); }
+.tema-nina a.boton.secundario:hover { color: #fff; }
+.tema-nina a.cat { color: var(--texto-suave); }
+.tema-nina a.cat.activa { color: var(--texto); }
+.tema-nina a.fila-link { color: var(--texto); }
+.tema-nina a.gran-opcion.google { color: #fff; }
+.tema-nina a.gran-opcion.privado { color: var(--texto); }
+.tema-nina .pie a { color: var(--texto-suave); }
+.tema-nina .barra-mesa .boton { white-space: nowrap; gap: 7px; padding: 12px 14px; font-size: .95rem; }

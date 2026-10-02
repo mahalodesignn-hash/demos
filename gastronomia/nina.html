@@ -1,43 +1,46 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-tema="nina">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nina · demo para cafeterías</title>
-  <link rel="stylesheet" href="../comun/estilos.css?v=20261002a">
-  <link rel="stylesheet" href="gastronomia.css?v=20261002a">
+  <link rel="stylesheet" href="../comun/estilos.css?v=20261002b">
+  <link rel="stylesheet" href="gastronomia.css?v=20261002b">
+  <script src="tema.js?v=20261002b"></script>
 </head>
 <body>
   <header class="encabezado portada">
-    <div style="font-size:3rem">☕</div>
     <h1>Nina</h1>
-    <div class="sub">Demo: carta QR, tarjeta de sellos y panel del local</div>
+    <div class="sub">Así se vería el café en el celular de tus clientes y en la tablet del local.</div>
   </header>
 
-  <main class="contenedor angosto" style="margin-top:16px">
-    <section class="tarjeta">
-      <h2>Probala en 3 pasos</h2>
-      <ol style="padding-left:18px;margin:0">
-        <li><strong>Tarjeta de sellos:</strong> anotate con tu nombre y WhatsApp (poné datos de prueba) y tocá "Sumar mi sello".</li>
-        <li><strong>Panel del local:</strong> pestaña <em>🎁 Clientes</em>. Ahí le llega el pedido de sello al mozo y lo confirma.</li>
-        <li><strong>Mensajes:</strong> en el mismo panel elegí una promo o un saludo de cumpleaños y mandalo por WhatsApp.</li>
-      </ol>
-      <p class="vacio" style="font-size:.85rem;margin-bottom:0">Es una demo: los datos se guardan solo en este celular o navegador. Probá la tarjeta y el panel en el mismo dispositivo.</p>
-    </section>
+  <main class="contenedor angosto">
+    <nav class="filas" aria-label="Demo">
+      <a class="fila-link f-tarjeta" href="tarjeta.html?local=nina">
+        <div><strong>Tarjeta de sellos</strong><span>Lo que ve el cliente al apoyar el celular en la plaquita</span></div>
+      </a>
+      <a class="fila-link f-panel" href="panel.html?local=nina">
+        <div><strong>Panel del local</strong><span>Sellos por confirmar, clientes, pedidos y mensajes</span></div>
+      </a>
+      <a class="fila-link f-carta" href="carta.html?local=nina&amp;mesa=5">
+        <div><strong>Carta de la mesa 5</strong><span>Pedido desde el celular, llamar al mozo y platos en 3D</span></div>
+      </a>
+    </nav>
 
-    <a class="gran-opcion google" href="tarjeta.html?local=nina">🎁 Tarjeta de sellos
-      <small>Lo que ve el cliente al apoyar el celular en la plaquita</small></a>
-    <a class="gran-opcion privado" href="panel.html?local=nina">🧾 Panel del local
-      <small>Pedidos, mozo, clientes y mensajes</small></a>
-    <a class="gran-opcion privado" href="carta.html?local=nina&mesa=5">📋 Carta QR de la mesa 5
-      <small>Pedido desde el celular, llamar al mozo y platos en 3D</small></a>
+    <section style="margin-top:28px">
+      <h2 style="font-size:1.25rem;margin:0 0 10px">Para probarla</h2>
+      <ol style="padding-left:20px;margin:0;color:var(--texto-suave)">
+        <li style="margin-bottom:6px">Abrí la tarjeta, anotate con datos de prueba y tocá <strong style="color:var(--texto)">Sumar mi sello</strong>.</li>
+        <li style="margin-bottom:6px">Entrá al panel, pestaña <strong style="color:var(--texto)">Clientes</strong>, y confirmá el sello.</li>
+        <li>En el mismo panel elegí una promo o un saludo de cumpleaños y mandalo por WhatsApp.</li>
+      </ol>
+      <p style="color:var(--texto-suave);font-size:.88rem;margin:14px 0 0">Es una demo: los datos quedan solo en este celular. Probá la tarjeta y el panel en el mismo dispositivo.</p>
+    </section>
   </main>
 
-  <footer class="pie">Soluciones para vos · demo</footer>
+  <footer class="pie">Soluciones para vos</footer>
 
-  <script src="config.js?v=20261002a"></script>
-  <script>
-    document.documentElement.style.setProperty("--marca", LOCALES.nina.colorPrincipal);
-  </script>
+  <script src="config.js?v=20261002b"></script>
+  <script>document.documentElement.style.setProperty("--marca", LOCALES.nina.colorPrincipal);</script>
 </body>
 </html>

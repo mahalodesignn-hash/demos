@@ -103,7 +103,7 @@ LOCALES.nina = {
   nombre: "Nina",
   lema: "Café de especialidad, pastelería y buen momento",
   direccion: "Rosario",
-  colorPrincipal: "#3d5a47",
+  colorPrincipal: "#2b3aa8",
 };
 
 const CLAVE_LOCAL = new URLSearchParams(location.search).get("local");

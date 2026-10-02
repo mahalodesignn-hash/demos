@@ -36,6 +36,8 @@ function guardarId(id) {
   try { localStorage.setItem(CLAVE_CLIENTE, id); } catch (e) { /* ignorar */ }
 }
 
+let ultimosSellos = null;
+
 function pintar() {
   datos = cargar();
   const c = datos.clientes.find((x) => x.id === idGuardado());
@@ -50,9 +52,15 @@ function pintar() {
   $("t-hola").textContent = `Hola, ${c.nombre.split(" ")[0]} 👋`;
   $("t-cuenta").textContent = c.canjes ? `${c.canjes} premio${c.canjes > 1 ? "s" : ""} canjeado${c.canjes > 1 ? "s" : ""}` : "";
   $("t-sellos").style.setProperty("--cols", Math.min(5, FID.meta));
+  // Nina: huellas de sello con ícono de taza (SVG) y la última recién sumada "se estampa"
+  const nina = document.documentElement.classList.contains("tema-nina");
+  const taza = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2v2M14 2v2M6 2v2"/><path d="M18 8h1a3 3 0 0 1 0 6h-1"/><path d="M3 8h15v7a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5Z"/></svg>`;
+  const regalo = `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>`;
+  const nuevo = nina && ultimosSellos !== null && c.sellos > ultimosSellos ? c.sellos - 1 : -1;
+  ultimosSellos = c.sellos;
   $("t-sellos").innerHTML = Array.from({ length: FID.meta }, (_, i) =>
-    i < c.sellos ? `<div class="sello lleno">${LOCAL.emoji}</div>`
-      : i === FID.meta - 1 ? `<div class="sello premio">🎁</div>` : `<div class="sello">${i + 1}</div>`).join("");
+    i < c.sellos ? `<div class="sello lleno${i === nuevo ? " nuevo" : ""}">${nina ? taza : LOCAL.emoji}</div>`
+      : i === FID.meta - 1 ? `<div class="sello premio" data-emoji>${nina ? regalo : "🎁"}</div>` : `<div class="sello">${i + 1}</div>`).join("");
 
   const faltan = FID.meta - c.sellos;
   $("t-texto").innerHTML = completa
