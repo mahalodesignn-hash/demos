@@ -20,7 +20,7 @@ Si `negocio/` no existe en esta compu, pedile al socio que lo clone (`gh repo cl
 |---|---|---|---|
 | Turnos con lista de espera (consultorios, estética) | `reservas/` | /demos/reservas/index.html · /demos/reservas/panel.html | `negocio/02 - Agentes/reservas-lista-espera/` |
 | Control de stock (comercios) | `stock/` | /demos/stock/index.html | `negocio/02 - Agentes/control-stock/` |
-| Turismo: Byway Turismo (prospecto real) | `turismo/` | /demos/turismo/index.html · consulta.html · panel.html · presupuesto.html?ejemplo | `negocio/02 - Agentes/turismo-presupuestos/` y `negocio/01 - Clientes/Agencia de turismo (a completar)/ficha.md` |
+| Turismo: Byway Turismo (prospecto real) | `turismo/` | /demos/turismo/index.html · consulta.html · panel.html · presupuesto.html?ejemplo | `negocio/02 - Agentes/turismo-presupuestos/` y `negocio/01 - Clientes/Agencias de viajes/Byway Turismo/ficha.md` |
 | Gastronomía (cafés, cervecerías, bodegones) | `gastronomia/` | /demos/gastronomia/ | `negocio/02 - Agentes/gastronomia/` |
 | Bot de WhatsApp por nicho (diseño, de Guido) | — | — | `negocio/02 - Agentes/whatsapp-bot/` |
 | Propuesta de tipografías y colores | `estilos/` | /demos/estilos/ | — |
